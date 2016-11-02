@@ -1,0 +1,26 @@
+{
+  "name": "astir-web",
+  "version": "0.0.1",
+  "description": "Web application to manage the database and the web service for the Astir mobile application.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "start-dev": "DEBUG=astir_web:server nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bruno Alexis Faúndez Valenzuela",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "debug": "^2.2.0",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
+    "jsonwebtoken": "^7.1.9",
+    "mongoose": "^4.6.5",
+    "morgan": "^1.7.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  }
+}

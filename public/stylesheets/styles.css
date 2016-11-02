@@ -1,0 +1,70 @@
+body{
+  background: #cb2d3e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #cb2d3e , #ef473a); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #cb2d3e , #ef473a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+nav{
+  font-family: 'RisingSun';
+}
+
+a{
+  color: white;
+}
+a:hover, a:focus{
+  color: rgb(236, 120, 63);
+}
+
+h1{
+  font-family: 'RisingSun';
+}
+
+header{
+  margin-top:72px;
+  min-height: auto;
+  height: 110%;
+  overflow-y: hidden;
+}
+.home-header-content{
+  margin-top: 120px;
+  font-size: 1.8em;
+  color: white;
+  font-family: 'RisingSun';
+  text-align: right;
+}
+
+.device{
+  width: 300px;
+  margin: 40px;
+}
+
+.device .device-content{
+  position: absolute;
+  top: 88px;
+  left: 79px;
+  width: 178px;
+}
+
+.app-container{
+  margin-top: 72px;
+  /*min-height: calc(100vh - 80px);*/
+  background-color: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+/* Angular Animations */
+.view.ng-enter{
+  animation: fadeInUp 1s;
+}
+
+.view.ng-leave{
+  animation: fadeOutDown .3s;
+}
+
+@font-face {
+  font-family: 'RisingSun';
+  src:  url('../fonts/RisingSun-Light.woff') format('woff');
+}
