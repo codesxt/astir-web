@@ -17,5 +17,6 @@ function navigationCtrl($location, authSvc, $rootScope){
   };
   $rootScope.$on("UserLoggedIn", function(){
     vm.isLoggedIn = authSvc.isLoggedIn();
+    vm.currentUser = authSvc.currentUser();
   });
 }

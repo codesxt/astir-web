@@ -24,9 +24,10 @@ function authSvc($http, $window){
   var currentUser = function() {
     if(isLoggedIn()){
       var token = getToken();
-      var payload = JSON.parse($window.atob(token.split('.')[1]));
+      var payload = JSON.parse(decodeURIComponent(escape($window.atob(token.split('.')[1]))));
       return {
-        email : payload.email
+        email : payload.email,
+        name: payload.name
       };
     }
   };
