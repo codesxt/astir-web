@@ -13,13 +13,16 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="page-scroll" href="#download">Descargar</a>
+                  <a class="page-scroll" href="#download">Descargar</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#features">Características</a>
+                  <a class="page-scroll" href="#features">Características</a>
                 </li>
-                <li>
-                    <a class="page-scroll" href="/#/login">Acceder</a>
+                <li ng-hide="navvm.isLoggedIn">
+                  <a href="/#/login">Acceder</a>
+                </li>
+                <li ng-show="navvm.isLoggedIn">
+                  <a href="" ng-click="navvm.logout()">Salir</a>
                 </li>
             </ul>
         </div>

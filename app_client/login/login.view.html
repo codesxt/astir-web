@@ -1,5 +1,6 @@
 <div class="container app-container">
 <h1>Acceso de Proveedores Culturales</h1>
+<div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
 <form class="form-horizontal" ng-submit="vm.onSubmit()">
  <div class="form-group">
    <label class="control-label col-sm-2" for="email">Email:</label>

@@ -3,7 +3,7 @@ angular.module('AstirWebApp')
 
 function navigation(){
   return {
-    restrict: 'EA',
+    restrict: 'E',
     templateUrl: 'common/directives/navigation/navigation.view.html',
     controller: 'navigationCtrl as navvm'
   };
