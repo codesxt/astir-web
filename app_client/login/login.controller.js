@@ -25,7 +25,7 @@ function loginCtrl ($location, authSvc, $rootScope){
       vm.formError = err.message;
     })
     .then(function(){
-      $location.path('/');
+      $location.path('/dashboard/events');
       $rootScope.$emit("UserLoggedIn", {});
     });
   }

@@ -1,6 +1,8 @@
 angular.module('AstirWebApp', [
   'ngRoute',
-  'ngAnimate'
+  'ngAnimate',
+  'ui.bootstrap',
+  'angularMoment'
 ]);
 
 function config ($routeProvider) {
@@ -13,6 +15,14 @@ function config ($routeProvider) {
     .when('/login', {
       templateUrl: 'login/login.view.html',
       controller: 'loginCtrl',
+      controllerAs: 'vm'
+    })
+    .when('/dashboard/events', {
+      templateUrl: 'dashboard/events-list/events-list.view.html'
+    })
+    .when('/dashboard/events/add-new',{
+      templateUrl: 'dashboard/events-add/events-add.view.html',
+      controller: 'eventsAddCtrl',
       controllerAs: 'vm'
     })
     .otherwise({redirectTo: '/'});
