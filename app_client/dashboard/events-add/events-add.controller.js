@@ -41,5 +41,8 @@ function eventsAddCtrl(moment, $uibModal){
         }
       }
     });
+    modalInstance.result.then(function (data) {
+      vm.newEvent.when.start = data;
+    });
   };
 }

@@ -4,11 +4,11 @@
 aria-hidden="true">×</span><span class="sr-only">Close</span></button></h3>
   </div>
   <div class="modal-body" id="modal-body">
-    CALENDARIO con la fecha: {{vm.dateData.date}}
-
+    CALENDARIO con la fecha: {{vm.date | amDateFormat:'dddd DD [de] MMMM YYYY, h:mm:ss a'}}
+    <button type="button" class="btn btn-default" ng-click="vm.addDay()">Sumar un día</button>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="vm.cancel()">Cancelar</button>
-    <button type="button" class="btn btn-primary">Actualizar Fecha</button>
+    <button type="button" class="btn btn-primary" ng-click="vm.close('ALGO')">Actualizar Fecha</button>
   </div>
 </div>
