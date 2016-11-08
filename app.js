@@ -5,6 +5,7 @@ var logger = require('morgan');
 var debug = require('debug')('astir_web:server');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var cors = require('cors');
 
 require('./app_api/models/db');
 require('./app_api/config/passport');
@@ -15,6 +16,7 @@ var webAppClientRouter = require('./app_server/routes/index');
 var app = express();
 debug("Configuring Express app...");
 app.use(logger('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
