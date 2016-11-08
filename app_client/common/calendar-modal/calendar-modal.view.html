@@ -4,8 +4,73 @@
 aria-hidden="true">×</span><span class="sr-only">Close</span></button></h3>
   </div>
   <div class="modal-body" id="modal-body">
-    CALENDARIO con la fecha: {{vm.date | amDateFormat:'dddd DD [de] MMMM YYYY, h:mm:ss a'}}
-    <button type="button" class="btn btn-default" ng-click="vm.addDay()">Sumar un día</button>
+    <div class="calendar">
+      <div class="calendar-title">
+        <span class="calendar-back"><a href="" ng-click="vm.calendar.prevMonth()"><</a></span>
+        <span class="calendar-title-text">{{vm.calendar.title}}</span>
+        <span class="calendar-forward"><a href="" ng-click="vm.calendar.nextMonth()">></a></span>
+      </div>
+      <div class="calendar-week calendar-names">
+        <span class="day">LUN</span>
+        <span class="day">MAR</span>
+        <span class="day">MIÉ</span>
+        <span class="day">JUE</span>
+        <span class="day">VIE</span>
+        <span class="day">SAB</span>
+        <span class="day">DOM</span>
+      </div>
+      <div class="calendar-week" ng-repeat="week in vm.calendar.displayWeeks">
+        <span
+          class="day"
+          ng-repeat="day in week"
+          ng-class="{'in-month': day.inDisplayMonth, selected: day.date.isSame(vm.calendar.selected, 'day')}"
+          ng-click="vm.calendar.select(day)">{{day.number}}</span>
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+    <div class="hour-selection">
+      <div class="hour-title">
+        <span>Hora del Evento</span>
+      </div>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="hour-selector" class="sr-only">Hora:</label>
+          <input id="hour-selector" type="number" name="quantity" min="0" max="23" size="2" ng-model="vm.time.hour">
+        </div>
+        :
+        <div class="form-group">
+          <label for="minutes-selector" class="sr-only">Minutos:</label>
+          <input id="minutes-selector" type="number" name="quantity" min="0" max="59" size="2" ng-model="vm.time.minutes">
+        </div>
+      </form>
+    </div>
+    <div class="hour-selection">
+      <div class="hour-title">
+        <span>Duración del Evento</span>
+      </div>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="d-days-selector">Días:</label>
+          <input id="d-days-selector" type="number" name="quantity" min="0" max="31" size="2" ng-model="vm.duration.days">
+        </div>
+        <div class="form-group">
+          <label for="d-hours-selector">Horas:</label>
+          <input id="d-hours-selector" type="number" name="quantity" min="0" max="23" size="2" ng-model="vm.duration.hours">
+        </div>
+        <div class="form-group">
+          <label for="d-minutes-selector">Minutos:</label>
+          <input id="d-minutes-selector" type="number" name="quantity" min="0" max="23" size="2" ng-model="vm.duration.minutes">
+        </div>
+      </form>
+    </div>
+    <div class="date-selected panel panel-default">
+      <div class="panel-body">
+      Fecha Seleccionada:
+      <span class="date-text">{{vm.date | amDateFormat:'dddd DD [de] MMMM YYYY'}}</span><br/>
+      Hora: <span class="date-text">{{vm.time.hour}}:{{vm.time.minutes}}</span><br/>
+      Duración: <span class="date-text">{{vm.duration.days}} días, {{vm.duration.hours}} horas y {{vm.duration.minutes}} minutos.</span>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="vm.cancel()">Cancelar</button>

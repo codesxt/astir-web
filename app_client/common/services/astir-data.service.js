@@ -1,12 +1,20 @@
 angular
 .module('AstirWebApp')
-.service('astirData', astirData);
+.service('astirDataSvc', astirData);
 
-function astirData($http){
+function astirData($http, authSvc){
   var getEvents = function(){
     return $http.get('/api/v1/events');
   };
+  var createEvent = function(newEvent){
+    return $http.post('/api/v1/events', newEvent, {
+      headers: {
+        Authorization: 'Bearer '+ authSvc.getToken()
+      }
+    });
+  }
   return {
-    getEvents : getEvents
+    getEvents : getEvents,
+    createEvent : createEvent
   };
 }

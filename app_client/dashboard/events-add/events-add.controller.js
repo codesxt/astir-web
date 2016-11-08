@@ -1,7 +1,7 @@
 angular.module('AstirWebApp')
 .controller('eventsAddCtrl', eventsAddCtrl);
 
-function eventsAddCtrl(moment, $uibModal){
+function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location){
   var vm = this;
   vm.categories = [
     {value: "music", name: "Música"},
@@ -12,22 +12,46 @@ function eventsAddCtrl(moment, $uibModal){
     {value: "talk", name: "Charla"},
     {value: "movie", name: "Aire Libre"}
   ];
+  vm.formError = "";
   vm.pageHeader = {
     title: 'Astir',
     subtitle: 'Cultura somos todos'
   };
+  vm.newCost = {
+    text: "",
+    value: 0
+  }
   vm.newEvent = {
-    name: "",
+    title: "",
     category: vm.categories[0].value,
     description: "",
     when: {
-      start: moment(),
-      finish: moment().add(2, 'hours')
+      start: moment().hours(0).minutes(0).seconds(0),
+      finish: moment().hours(0).minutes(0).seconds(0).add(2, 'hours')
     },
-    where: ""
+    where: "",
+    cost: []
   };
   vm.onSubmit = function (){
-    console.log(vm.newEvent);
+    var event = {
+      title: vm.newEvent.title,
+      category: vm.newEvent.category,
+      description: vm.newEvent.description,
+      when: {
+        start: vm.newEvent.when.start.format(),
+        finish: vm.newEvent.when.finish.format()
+      },
+      where: vm.newEvent.where,
+      cost: vm.newEvent.cost
+    }
+    console.log(JSON.stringify(vm.newEvent));
+    astirDataSvc.createEvent(vm.newEvent)
+    .success(function (data) {
+      $location.path('/dashboard/events')
+    })
+    .error(function (data) {
+      vm.formError = "El evento no pudo ser creado. Por favor, revise que los datos hayan sido ingresados correctamente.";
+    });;
   }
   vm.openCalendar = function(){
     var modalInstance = $uibModal.open({
@@ -36,13 +60,23 @@ function eventsAddCtrl(moment, $uibModal){
       resolve: {
         dateData: function(){
           return {
-            date: vm.newEvent.when.start
+            date: vm.newEvent.when
           }
         }
       }
     });
     modalInstance.result.then(function (data) {
-      vm.newEvent.when.start = data;
+      vm.newEvent.when = data;
     });
   };
+  vm.addCost = function(){
+    vm.newEvent.cost.push({
+      text: vm.newCost.text,
+      value: vm.newCost.value
+    })
+  }
+  vm.removeCost = function(cost) {
+    var index = vm.newEvent.cost.indexOf(cost);
+    vm.newEvent.cost.splice(index, 1);
+  }
 }

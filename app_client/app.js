@@ -18,7 +18,9 @@ function config ($routeProvider) {
       controllerAs: 'vm'
     })
     .when('/dashboard/events', {
-      templateUrl: 'dashboard/events-list/events-list.view.html'
+      templateUrl: 'dashboard/events-list/events-list.view.html',
+      controller: 'eventsListCtrl',
+      controllerAs: 'vm'
     })
     .when('/dashboard/events/add-new',{
       templateUrl: 'dashboard/events-add/events-add.view.html',

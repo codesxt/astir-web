@@ -1,6 +1,7 @@
 <div class="container app-container">
   <h1>Lista de eventos</h1>
   <dashboard-navigation></dashboard-navigation>
+  <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
   <table class="table table-striped table-bordered">
   <caption>Lista con todos los eventos registrados</caption>
   <thead>
@@ -12,22 +13,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Algo</td>
-      <td>Algo</td>
-      <td>Un texto algo más largo que dice muchas cosas sobre el evento</td>
-      <td>Un botón para editar</td>
-    </tr>
-    <tr>
-      <td>Algo</td>
-      <td>Algo</td>
-      <td>Un texto algo más largo que dice muchas cosas sobre el evento</td>
-      <td>Un botón para editar</td>
-    </tr>
-    <tr>
-      <td>Algo</td>
-      <td>Algo</td>
-      <td>Un texto algo más largo que dice muchas cosas sobre el evento</td>
+    <tr ng-repeat="event in vm.events">
+      <td>{{event.title}}</td>
+      <td>{{event.category}}</td>
+      <td>{{event.description}}</td>
       <td>Un botón para editar</td>
     </tr>
   </tbody>

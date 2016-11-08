@@ -55,6 +55,114 @@ header{
   box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
 }
 
+/* Calendar Styles */
+.calendar {
+  display: block;
+  width: 300px;
+  border: 1px solid rgb(150, 150, 150);
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  float: left;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.calendar .calendar-title{
+  display:block;
+  height: 30px;
+  background-color: rgb(39, 141, 207);
+  color: #FFF;
+  text-align: center;
+  padding: 0;
+}
+.calendar .calendar-title span{
+  height: 100%;
+  text-align: center;
+  vertical-align: -5px;
+  text-transform: capitalize;
+  box-sizing: content-box;
+}
+.calendar .calendar-title .calendar-title-text{
+  width: 100%;
+  display: inline-block;
+}
+.calendar .calendar-title .calendar-back,
+.calendar .calendar-title .calendar-forward {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+}
+.calendar .calendar-title .calendar-back {
+  left: 15px;
+}
+.calendar .calendar-title .calendar-forward{
+  left: 285px;
+}
+.calendar .calendar-title .calendar-back a,
+.calendar .calendar-title .calendar-forward a{
+  display:block;
+  height: 100%;
+  width: 100%;
+}
+.calendar .calendar-week{
+  width:100%;
+  display: block;
+  box-sizing: border-box;
+}
+.calendar .calendar-week span{
+  width: calc(100% / 7);
+  display: block;
+  box-sizing: border-box;
+  float: left;
+  text-align: center;
+  border: 1px solid rgb(170, 170, 170);
+}
+.calendar .calendar-week .in-month{
+  font-weight: bold;
+}
+.calendar .calendar-week .selected{
+  background-color: rgb(39, 141, 207);
+  color: #FFF;
+}
+.calendar .calendar-names{
+  width: 100%;
+  font-weight: bold;
+  color: rgb(39, 141, 207);
+}
+
+.date-selected{
+  clear: left;
+}
+.date-selected .date-text{
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.hour-selection{
+  display: block;
+  width: 200px;
+  float: left;
+  margin-bottom: 10px;
+}
+.hour-selection .hour-title{
+  display:block;
+  height: 30px;
+  border: 1px solid rgb(150, 150, 150);
+  background-color: rgb(39, 141, 207);
+  color: #FFF;
+  text-align: center;
+}
+.hour-selection .hour-title span{
+  height: 100%;
+  text-align: center;
+  vertical-align: -5px;
+  text-transform: capitalize;
+  box-sizing: content-box;
+}
+.cost-list{
+  list-style: none;
+}
+
 /* Angular Animations */
 .view.ng-enter{
   animation: fadeInUp 1s;
