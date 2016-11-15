@@ -51,7 +51,7 @@
    <div class="form-group">
      <label class="control-label col-sm-2" for="name">Dirección del Evento:</label>
      <div class="col-sm-10">
-       <input type="name" class="form-control" id="name" placeholder="Ingrese la ubicación del evento" ng-model="vm.newEvent.where ">
+       <input type="name" class="form-control" id="name" placeholder="Ingrese la ubicación del evento" ng-model="vm.newEvent.where.address">
      </div>
    </div>
    <div class="form-group">
@@ -62,16 +62,31 @@
      <div class="col-sm-2">
        <input type="number" class="form-control" id="cost-value" placeholder="Texto" ng-model="vm.newCost.value">
      </div>
-     <div class="col-sm-2">
+     <div class="col-sm-1">
        <button class="btn btn-default" ng-click="vm.addCost()" type="button">+</button>
      </div>
-     <div class="col-sm-4">
-       <div ng-hide="vm.newEvent.cost">
-         Entrada Liberada
+     <div class="col-sm-5">
+       <div ng-show="vm.newEvent.cost == ''">
+         <b>Entrada Liberada</b><br/>Si el evento tiene costo, añádalo utilizando el formulario a la izquierda.
        </div>
-       <ul ng-show="vm.newEvent.cost" class="cost-list">
-         <li ng-repeat="cost in vm.newEvent.cost">{{cost.text}}: ${{cost.value}} <button class="btn btn-default" ng-click="vm.removeCost(cost)" type="button">-</button></li>
-       </ul>
+       <table class="col-md-12 table table-stripped table-condensed" ng-show="vm.newEvent.cost != ''">
+         <thead>
+           <tr>
+           <th>Ítem</th>
+           <th>Valor</th>
+           <th></th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr ng-repeat="cost in vm.newEvent.cost">
+             <td>{{cost.text}}</td>
+             <td>$ {{cost.value}}</td>
+             <td>
+               <button class="btn btn-default" ng-click="vm.removeCost(cost)" type="button">-</button>
+             </td>
+           </tr>
+         </tbody>
+       </table>
      </div>
    </div>
    <div class="form-group">

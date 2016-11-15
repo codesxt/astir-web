@@ -7,7 +7,12 @@ var sendJSONresponse = function(res, status, content) {
 };
 
 module.exports.eventsList = function (req, res) {
-  Event.find({},
+  Event.find(
+    {
+      "when.start": {$gt: new Date()}
+    },
+    null,
+    {sort:{"when.start":1}},
     function(err, events){
       if(err){
         console.log(err);
@@ -33,4 +38,23 @@ module.exports.eventsCreate = function (req, res) {
 };
 module.exports.eventsReadOne = function (req, res) { };
 module.exports.eventsUpdateOne = function (req, res) { };
-module.exports.eventsDeleteOne = function (req, res) { };
+module.exports.eventsDeleteOne = function (req, res) {
+  var eventId = req.params.eventId;
+  console.log("ID: "+eventId);
+  if(eventId){
+    Event.findByIdAndRemove(eventId)
+    .exec(
+      function(err, event){
+        if(err){
+          sendJSONresponse(res, 404, err);
+          return;
+        }
+        sendJSONresponse(res, 204, null);
+      }
+    )
+  }else{
+    sendJSONresponse(res, 404, {
+      "message": "No se encontró el evento."
+    })
+  }
+};

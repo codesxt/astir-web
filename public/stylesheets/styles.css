@@ -159,9 +159,15 @@ header{
   text-transform: capitalize;
   box-sizing: content-box;
 }
-.cost-list{
-  list-style: none;
+
+/* Events List Styles */
+.events-list-table td{
+  max-width: 0px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
+
 
 /* Angular Animations */
 .view.ng-enter{

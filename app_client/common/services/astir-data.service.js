@@ -13,8 +13,16 @@ function astirData($http, authSvc){
       }
     });
   }
+  var deleteEvent = function(eventId){
+    return $http.delete('/api/v1/events/'+eventId, {
+      headers: {
+        'Authorization': 'Bearer '+ authSvc.getToken()
+      }
+    });
+  }
   return {
     getEvents : getEvents,
-    createEvent : createEvent
+    createEvent : createEvent,
+    deleteEvent : deleteEvent
   };
 }

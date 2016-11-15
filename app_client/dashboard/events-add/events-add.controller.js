@@ -6,6 +6,7 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location){
   vm.categories = [
     {value: "music", name: "Música"},
     {value: "theatre", name: "Teatro"},
+    {value: "opera", name: "Ópera"},
     {value: "exposition", name: "Exposición"},
     {value: "festival", name: "Festival"},
     {value: "fair", name: "Feria"},
@@ -29,7 +30,9 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location){
       start: moment().hours(0).minutes(0).seconds(0),
       finish: moment().hours(0).minutes(0).seconds(0).add(2, 'hours')
     },
-    where: "",
+    where: {
+      address: ""
+    },
     cost: []
   };
   vm.onSubmit = function (){
@@ -41,11 +44,13 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location){
         start: vm.newEvent.when.start.format(),
         finish: vm.newEvent.when.finish.format()
       },
-      where: vm.newEvent.where,
+      where: {
+        address: vm.newEvent.where.address
+      },
       cost: vm.newEvent.cost
     }
-    console.log(JSON.stringify(vm.newEvent));
-    astirDataSvc.createEvent(vm.newEvent)
+    console.log(JSON.stringify(event));
+    astirDataSvc.createEvent(event)
     .success(function (data) {
       $location.path('/dashboard/events')
     })
