@@ -1,8 +1,60 @@
+// hrafnsmal: Pato en Steam
 angular.module('AstirWebApp')
 .controller('eventsAddCtrl', eventsAddCtrl);
 
-function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location){
+function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location, $scope, leafletData){
   var vm = this;
+  vm.mapCursor = {
+    lat: -35.4265765,
+    lng: -71.6661856
+  };
+  angular.extend(vm, {
+    defaults: {
+        scrollWheelZoom: false
+    },
+    center: {
+      lat: vm.mapCursor.lat,
+      lng: vm.mapCursor.lng,
+      zoom: 15
+    },
+    tiles: {
+      name: 'Mapbox Outdoors',
+      url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+      type: 'xyz',
+      options: {
+        apikey: 'pk.eyJ1IjoiY29kZXN4dCIsImEiOiJjaWc4ZW95Z2YwOTRndnhrdjBvZHBxbW95In0.thmYteAR25Fu-fJH2I3ZTA',
+        mapid: 'codesxt.cig8eowrz09fwt6lyhcmpfzst'
+      }
+    },
+    markers : {
+      selectedLocation: {
+        lat: vm.mapCursor.lat,
+        lng: vm.mapCursor.lng,
+        focus: true,
+        message: "Ubicación seleccionada: "+vm.mapCursor.lat+","+vm.mapCursor.lng
+      }
+    }
+  });
+  $scope.$on("leafletDirectiveMap.locationSelect.click", function(event, args){
+    var leafEvent = args.leafletEvent;
+    vm.mapCursor.lat = leafEvent.latlng.lat;
+    vm.mapCursor.lng = leafEvent.latlng.lng;
+    var message = "Ubicación seleccionada: "+vm.mapCursor.lat+","+vm.mapCursor.lng;
+    var selectedLocation = {
+      lat: vm.mapCursor.lat,
+      lng: vm.mapCursor.lng,
+      focus: true,
+      message: message
+    }
+    angular.extend(vm, {
+      markers: {selectedLocation},
+      center: {
+        lat: vm.mapCursor.lat,
+        lng: vm.mapCursor.lng,
+        zoom: 15
+      },
+    });
+  });
   vm.categories = [
     {value: "music", name: "Música"},
     {value: "theatre", name: "Teatro"},
@@ -18,6 +70,15 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location){
     title: 'Astir',
     subtitle: 'Cultura somos todos'
   };
+  vm.hasLocation = false;
+  vm.toggleLocation = function(){
+    vm.hasLocation = !vm.hasLocation;
+    setTimeout(function(){
+      leafletData.getMap().then(function (map) {
+        map.invalidateSize();
+      });
+    }, 100);
+  }
   vm.newCost = {
     text: "",
     value: 0
@@ -48,6 +109,12 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location){
         address: vm.newEvent.where.address
       },
       cost: vm.newEvent.cost
+    }
+    if(vm.hasLocation){
+      event.where.location = {
+        type: 'Point',
+        coordinates: [vm.mapCursor.lng, vm.mapCursor.lat]
+      };
     }
     console.log(JSON.stringify(event));
     astirDataSvc.createEvent(event)

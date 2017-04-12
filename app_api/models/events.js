@@ -3,7 +3,7 @@ var mongoose = require( 'mongoose' );
 var locationSchema = new mongoose.Schema({
   type: {type: String, default: 'Point'},
   coordinates: []
-});
+},{ _id : false });
 
 var eventSchema = new mongoose.Schema({
   title: {type: String, required: true},

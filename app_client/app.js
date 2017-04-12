@@ -2,10 +2,12 @@ angular.module('AstirWebApp', [
   'ngRoute',
   'ngAnimate',
   'ui.bootstrap',
-  'angularMoment'
+  'angularMoment',
+  'leaflet-directive'
 ]);
 
-function config ($routeProvider) {
+function config ($routeProvider, $logProvider) {
+  $logProvider.debugEnabled(false);
   $routeProvider
     .when('/', {
       templateUrl: 'home/home.view.html',
@@ -31,4 +33,4 @@ function config ($routeProvider) {
 }
 
 angular.module('AstirWebApp')
-.config(['$routeProvider', config]);
+.config(['$routeProvider', '$logProvider', config]);

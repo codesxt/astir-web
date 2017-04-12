@@ -50,8 +50,24 @@
    </div>
    <div class="form-group">
      <label class="control-label col-sm-2" for="name">Dirección del Evento:</label>
-     <div class="col-sm-10">
+     <div class="col-sm-7">
        <input type="name" class="form-control" id="name" placeholder="Ingrese la ubicación del evento" ng-model="vm.newEvent.where.address">
+     </div>
+     <div class="col-sm-3">
+      <button class="btn btn-default" ng-click="vm.toggleLocation()" type="button" ng-class="{active : vm.hasLocation}">
+        Añadir Geolocalización
+      </button>
+    </div>
+   </div>
+   <div class="row" ng-show="vm.hasLocation">
+     <div class="col-md-offset-2 col-md-10">
+       <leaflet
+       width="100%"
+       id="locationSelect"
+       lf-center="vm.center"
+       tiles="vm.tiles"
+       markers="vm.markers">
+       </leaflet>
      </div>
    </div>
    <div class="form-group">
