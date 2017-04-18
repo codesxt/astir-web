@@ -184,7 +184,20 @@ header{
   animation: fadeOutDown .3s;
 }
 
+/* Font Faces */
 @font-face {
   font-family: 'RisingSun';
   src:  url('../fonts/RisingSun-Light.woff') format('woff');
+}
+
+/* Form Pages */
+.form-page {
+  min-height: 350px;
+  padding:10px;
+  border: 1px solid rgba(0, 163, 129, 0.67);
+}
+
+.page-list {
+  width:100%;
+  display: block;
 }
