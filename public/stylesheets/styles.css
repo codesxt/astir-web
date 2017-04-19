@@ -192,12 +192,11 @@ header{
 
 /* Form Pages */
 .form-page {
-  min-height: 350px;
+  min-height: 300px;
   padding:10px;
-  border: 1px solid rgba(0, 163, 129, 0.67);
+  /*border: 1px solid rgba(0, 163, 129, 0.67);*/
 }
 
 .page-list {
-  width:100%;
-  display: block;
+  margin: 0 auto !important;
 }

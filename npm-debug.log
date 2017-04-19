@@ -1,45 +1,28 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'run', 'start' ]
-2 info using npm@3.10.9
-3 info using node@v6.9.2
-4 verbose run-script [ 'prestart', 'start', 'poststart' ]
-5 info lifecycle astir-web@0.0.1~prestart: astir-web@0.0.1
-6 silly lifecycle astir-web@0.0.1~prestart: no script for prestart, continuing
-7 info lifecycle astir-web@0.0.1~start: astir-web@0.0.1
-8 verbose lifecycle astir-web@0.0.1~start: unsafe-perm in lifecycle true
-9 verbose lifecycle astir-web@0.0.1~start: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/home/bruno/Desarrollo/astir-web/node_modules/.bin:/usr/java/jdk1.8.0_121/bin:/usr/lib64/ccache:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/opt/android-studio/bin:/home/bruno/Android/Sdk/tools
-10 verbose lifecycle astir-web@0.0.1~start: CWD: /home/bruno/Desarrollo/astir-web
-11 silly lifecycle astir-web@0.0.1~start: Args: [ '-c', 'node ./bin/www' ]
-12 silly lifecycle astir-web@0.0.1~start: Returned: code: 1  signal: null
-13 info lifecycle astir-web@0.0.1~start: Failed to exec start script
-14 verbose stack Error: astir-web@0.0.1 start: `node ./bin/www`
-14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/usr/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
-14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:40:14)
-14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at ChildProcess.emit (events.js:191:7)
-14 verbose stack     at maybeClose (internal/child_process.js:877:16)
-14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-15 verbose pkgid astir-web@0.0.1
-16 verbose cwd /home/bruno/Desarrollo/astir-web
-17 error Linux 4.8.16-300.fc25.x86_64
-18 error argv "/usr/bin/node" "/usr/bin/npm" "run" "start"
-19 error node v6.9.2
-20 error npm  v3.10.9
-21 error code ELIFECYCLE
-22 error astir-web@0.0.1 start: `node ./bin/www`
-22 error Exit status 1
-23 error Failed at the astir-web@0.0.1 start script 'node ./bin/www'.
-23 error Make sure you have the latest version of node.js and npm installed.
-23 error If you do, this is most likely a problem with the astir-web package,
-23 error not with npm itself.
-23 error Tell the author that this fails on your system:
-23 error     node ./bin/www
-23 error You can get information on how to open an issue for this project with:
-23 error     npm bugs astir-web
-23 error Or if that isn't available, you can get their info via:
-23 error     npm owner ls astir-web
-23 error There is likely additional logging output above.
-24 verbose exit [ 1, true ]
+1 verbose cli [ '/usr/bin/node',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'start-android-bundle',
+1 verbose cli   '--uglyfy' ]
+2 info using npm@3.10.10
+3 info using node@v6.10.0
+4 verbose stack Error: missing script: start-android-bundle
+4 verbose stack     at run (/usr/lib/node_modules/npm/lib/run-script.js:151:19)
+4 verbose stack     at /usr/lib/node_modules/npm/lib/run-script.js:61:5
+4 verbose stack     at /usr/lib/node_modules/npm/node_modules.bundled/read-package-json/read-json.js:356:5
+4 verbose stack     at checkBinReferences_ (/usr/lib/node_modules/npm/node_modules.bundled/read-package-json/read-json.js:320:45)
+4 verbose stack     at final (/usr/lib/node_modules/npm/node_modules.bundled/read-package-json/read-json.js:354:3)
+4 verbose stack     at then (/usr/lib/node_modules/npm/node_modules.bundled/read-package-json/read-json.js:124:5)
+4 verbose stack     at /usr/lib/node_modules/npm/node_modules.bundled/read-package-json/read-json.js:243:12
+4 verbose stack     at /usr/lib/node_modules/npm/node_modules.bundled/graceful-fs/graceful-fs.js:78:16
+4 verbose stack     at tryToString (fs.js:455:3)
+4 verbose stack     at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:442:12)
+5 verbose cwd /home/bruno/Desarrollo/astir-web
+6 error Linux 4.10.9-200.fc25.x86_64
+7 error argv "/usr/bin/node" "/usr/bin/npm" "run" "start-android-bundle" "--uglyfy"
+8 error node v6.10.0
+9 error npm  v3.10.10
+10 error missing script: start-android-bundle
+11 error If you need help, you may report this error at:
+11 error     <https://github.com/npm/npm/issues>
+12 verbose exit [ 1, true ]

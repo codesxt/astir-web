@@ -27,6 +27,9 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location, $scope, leafl
   ]
   vm.formPageSelected = vm.formPages[0].value;
   vm.formError = "";
+  vm.selectPage = function(pageNumber){
+    vm.formPageSelected = pageNumber;
+  }
 
   vm.newEvent = {
     title: "",
@@ -76,7 +79,7 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location, $scope, leafl
       .error(function (data) {
         vm.formError = "El evento no pudo ser creado. Por favor, revise que los datos hayan sido ingresados correctamente.";
       });
-    }    
+    }
   }
   vm.openCalendar = function(){
     var modalInstance = $uibModal.open({

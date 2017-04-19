@@ -20,10 +20,14 @@
       <td>{{event.description}}</td>
       <td class="col-md-2">{{event.when.start}}</td>
       <td class="col-md-1">
-        <button type="button" class="btn btn-default">Editar</button>
+        <button type="button" class="btn btn-default">
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        </button>
       </td>
       <td class="col-md-1">
-        <button type="button" class="btn btn-danger" ng-click="vm.deleteEvent(event)">Eliminar</button>
+        <button type="button" class="btn btn-danger" ng-click="vm.deleteEvent(event)">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
       </td>
     </tr>
   </tbody>

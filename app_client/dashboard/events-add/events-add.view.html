@@ -5,12 +5,13 @@
   <h3>Ingrese datos del evento</h3>
   <form class="form-horizontal" ng-submit="vm.onSubmit()">
     <div class="form-group page-list">
-      <span ng-repeat="page in vm.formPages">
-        <input type="radio" ng-model="vm.formPageSelected" value="{{ page.value }}"/>
-        {{ page.name }}
-      </span>
+      <div class="btn-group btn-group-justified">
+        <a ng-repeat="page in vm.formPages" ng-click="vm.selectPage(page.value)" class="btn btn-default">
+          {{page.value}}. {{ page.name }}
+        </a>
+      </div>
     </div>
-    <div class="form-page" ng-show="vm.formPageSelected==1">
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==1">
       <div class="form-group">
         <label class="control-label col-sm-2" for="title">Título del Evento:</label>
         <div class="col-sm-10">
@@ -33,7 +34,7 @@
       </div>
     </div>
 
-    <div class="form-page" ng-show="vm.formPageSelected==2">
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==2">
       <div class="form-group">
         <label class="control-label col-sm-2" for="name">Fecha de Inicio:</label>
         <div class="col-sm-5">
@@ -60,7 +61,7 @@
       </div>
     </div>
 
-    <div class="form-page" ng-show="vm.formPageSelected==3">
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==3">
       <div class="form-group">
         <label class="control-label col-sm-2" for="name">Dirección del Evento:</label>
         <div class="col-sm-7">
@@ -85,7 +86,7 @@
       </div>
     </div>
 
-    <div class="form-page" ng-show="vm.formPageSelected==4">
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==4">
       <div class="form-group">
         <label class="control-label col-sm-2" for="cost-text">Costo del evento:</label>
         <div class="col-sm-2">
@@ -123,7 +124,7 @@
       </div>
     </div>
 
-    <div class="form-page" ng-show="vm.formPageSelected==5">
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==5">
       <p> Revise la información antes de confirmar el evento: </p>
       <p> Nombre del Evento: {{ vm.newEvent.title }}</p>
       <p> Categoría: {{ vm.newEvent.category }}</p>
