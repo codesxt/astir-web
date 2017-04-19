@@ -16,7 +16,8 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location, $scope, leafl
     {value: "festival", name: "Festival"},
     {value: "fair", name: "Feria"},
     {value: "talk", name: "Charla"},
-    {value: "movie", name: "Aire Libre"}
+    {value: "movie", name: "Cine"},
+    {value: "outdoors", name: "Aire Libre"}
   ];
   vm.formPages = [
     {value: "1", name:"Datos Generales"},
