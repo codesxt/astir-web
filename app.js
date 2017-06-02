@@ -65,5 +65,12 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// Keeps application alive in Heroku
+setInterval(function() {
+  http.get("http://astir.herokuapp.com");
+}, 1000*60*5);
+
+
+
 debug("Express app configured.");
 module.exports = app;
