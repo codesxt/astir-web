@@ -200,3 +200,6 @@ header{
 .page-list {
   margin: 0 auto !important;
 }
+
+/* Valores para la directiva de mapas de Google */
+.angular-google-map-container { height: 200px; }

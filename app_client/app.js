@@ -3,7 +3,7 @@ angular.module('AstirWebApp', [
   'ngAnimate',
   'ui.bootstrap',
   'angularMoment',
-  'leaflet-directive'
+  'uiGmapgoogle-maps',
 ]);
 
 function config ($routeProvider, $logProvider) {
@@ -27,6 +27,11 @@ function config ($routeProvider, $logProvider) {
     .when('/dashboard/events/add-new',{
       templateUrl: 'dashboard/events-add/events-add.view.html',
       controller: 'eventsAddCtrl',
+      controllerAs: 'vm'
+    })
+    .when('/dashboard/events/add',{
+      templateUrl: 'dashboard/events-add2/events-add2.view.html',
+      controller: 'eventsAdd2Ctrl',
       controllerAs: 'vm'
     })
     .otherwise({redirectTo: '/'});

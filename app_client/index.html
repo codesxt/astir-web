@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/lumen.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
     <link rel="stylesheet" type="text/css" href="lib/animate.css">
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
+    <!--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">-->
   </head>
   <body>
     <navigation></navigation>
@@ -17,8 +17,14 @@
     <script src="/lib/moment/moment.min.js"></script>
     <script src="/lib/moment/locales/es.js"></script>
     <script src="/lib/angular-moment.min.js"></script>
-    <script src="/lib/ui-bootstrap/ui-bootstrap-custom-2.2.0.min.js"></script>
-    <script src="/lib/ui-bootstrap/ui-bootstrap-custom-tpls-2.2.0.min.js"></script>
+    <script src="/lib/ui-bootstrap/ui-bootstrap-custom-2.5.0.min.js"></script>
+    <script src="/lib/ui-bootstrap/ui-bootstrap-custom-tpls-2.5.0.min.js"></script>
+    <!-- Bibliotecas necesarias para Integrar con Google Maps -->
+    <script src="/lib/lodash.js"></script>
+    <script src='//maps.googleapis.com/maps/api/js?key=AIzaSyA1NLiriGyQz7tgpRlWnbVvuW4xxbT8JR0'></script>
+    <script src="/lib/angular-google-maps.js"></script>
+    <script src="/lib/angular-simple-logger.js"></script>
+
     <script src="/app.js"></script>
     <script src="/home/home.controller.js"></script>
     <script src="/login/login.controller.js"></script>
@@ -29,10 +35,13 @@
     <script src="/common/directives/dashboard-navigation/dashboard-navigation.directive.js"></script>
     <script src="/common/directives/dashboard-navigation/dashboard-navigation.controller.js"></script>
     <script src="/dashboard/events-add/events-add.controller.js"></script>
+    <script src="/dashboard/events-add2/events-add2.controller.js"></script>
     <script src="/dashboard/events-list/events-list.controller.js"></script>
     <script src="/common/calendar-modal/calendar-modal.controller.js"></script>
 
+    <!--
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
     <script src="/lib/angular-leaflet-directive.min.js"></script>
+    -->
   </body>
 </html>
