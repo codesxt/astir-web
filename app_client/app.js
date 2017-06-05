@@ -6,7 +6,7 @@ angular.module('AstirWebApp', [
   'uiGmapgoogle-maps',
 ]);
 
-function config ($routeProvider, $logProvider) {
+function config ($routeProvider, $logProvider, uiGmapGoogleMapApiProvider) {
   $logProvider.debugEnabled(false);
   $routeProvider
     .when('/', {
@@ -35,7 +35,14 @@ function config ($routeProvider, $logProvider) {
       controllerAs: 'vm'
     })
     .otherwise({redirectTo: '/'});
+
+  uiGmapGoogleMapApiProvider.configure({
+    //    key: 'your api key',
+    key: 'AIzaSyA1NLiriGyQz7tgpRlWnbVvuW4xxbT8JR0',
+    v: '3.27', //defaults to latest 3.X anyhow
+    libraries: 'weather,geometry,visualization'
+  });
 }
 
 angular.module('AstirWebApp')
-.config(['$routeProvider', '$logProvider', config]);
+.config(['$routeProvider', '$logProvider', 'uiGmapGoogleMapApiProvider', config]);

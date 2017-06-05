@@ -7,7 +7,12 @@ function astirData($http, authSvc){
     return $http.get('/api/v1/events');
   };
   var createEvent = function(newEvent){
-    return $http.post('/api/v1/events', newEvent, {
+    return $http.post('/api/v1/events', {
+      data: {
+        type: "events",
+        attributes: newEvent
+      }
+    }, {
       headers: {
         Authorization: 'Bearer '+ authSvc.getToken()
       }

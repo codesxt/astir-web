@@ -1,7 +1,6 @@
 <div class="container app-container">
   <h1>Añadir un nuevo evento</h1>
   <dashboard-navigation></dashboard-navigation>
-  <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
   <h3>Ingrese datos del evento</h3>
   <form class="form-horizontal" ng-submit="vm.onSubmit()">
 
@@ -90,9 +89,15 @@
     </div>
     <h4>3. Ubicación</h4>
     <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Lugar del Evento:</label>
+      <div class="col-sm-10">
+        <input type="name" class="form-control" id="name" placeholder="Nombre del lugar del evento (ej.: nombre del teatro)" ng-model="vm.newEvent.where.name">
+      </div>
+    </div>
+    <div class="form-group">
       <label class="control-label col-sm-2" for="name">Dirección del Evento:</label>
       <div class="col-sm-10">
-        <input type="name" class="form-control" id="name" placeholder="Ingrese la ubicación del evento" ng-model="vm.newEvent.where.address">
+        <input type="name" class="form-control" id="name" placeholder="Escriba la dirección del evento o selecciónela en el mapa" ng-model="vm.newEvent.where.address">
       </div>
       <div class="col-sm-10 col-sm-offset-2">
         <ui-gmap-google-map
@@ -106,17 +111,35 @@
         </ui-gmap-google-map>
       </div>
     </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Ubicación exacta:</label>
+      <div class="col-sm-10">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="vm.exactLocation">
+              Al activar la ubicación exacta, los usuarios podrán abrir la ubicación
+              del evento en aplicaciones de mapas como Google Maps en sus dispositivos.
+              Activar esta opción solamente si el marcador del mapa de arriba está
+              ubicado exactamente en la posición del evento.
+            </input>
+          </label>
+        </div>
+      </div>
+    </div>
     <h4>4. Costo</h4>
     <div class="form-group">
       <label class="control-label col-sm-2" for="cost-text">Costo del evento:</label>
       <div class="col-sm-2">
         <input type="text" class="form-control" id="cost-text" placeholder="Texto" ng-model="vm.newCost.text">
       </div>
-      <div class="col-sm-2">
-        <input type="number" class="form-control" id="cost-value" placeholder="Texto" ng-model="vm.newCost.value">
-      </div>
-      <div class="col-sm-1">
-        <button class="btn btn-default" ng-click="vm.addCost()" type="button">+</button>
+      <div class="col-sm-3">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input type="number" class="form-control" id="cost-value" placeholder="Texto" ng-model="vm.newCost.value">
+          <span class="input-group-btn">
+            <button class="btn btn-default" ng-click="vm.addCost()" type="button">Añadir</button>
+          </span>
+        </div>
       </div>
       <div class="col-sm-5">
         <div ng-show="vm.newEvent.cost == ''">
@@ -145,7 +168,8 @@
 
     <h4>5. Confirmación</h4>
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+      <div class="col-sm-offset-2 col-sm-10">        
+        <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
         <button type="submit" class="btn btn-default">Registrar Evento</button>
       </div>
     </div>

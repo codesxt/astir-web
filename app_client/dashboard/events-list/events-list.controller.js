@@ -7,8 +7,8 @@ function eventsListCtrl(moment, astirDataSvc, authSvc, $location){
   vm.formError
   vm.getData = function(){
     astirDataSvc.getEvents()
-      .success(function(events){
-        vm.events = events;
+      .success(function(res){
+        vm.events = res.data;
         console.log("Eventos recibidos de la API.");
       })
       .error(function(e){

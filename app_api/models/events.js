@@ -14,6 +14,7 @@ var eventSchema = new mongoose.Schema({
     finish: {type: Date, required: false}
   },
   where: {
+    name: {type: String, required: true},
     address: {type: String, required: true},
     location: {
       type: locationSchema,

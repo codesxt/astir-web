@@ -7,7 +7,8 @@ function eventsAdd2Ctrl(
   $uibModal,
   astirDataSvc,
   $location,
-  $scope){
+  $scope,
+  uiGmapGoogleMapApi){
   var vm = this;
   vm.pageHeader = {
     title: 'Astir',
@@ -32,9 +33,10 @@ function eventsAdd2Ctrl(
     description: "",
     when: {
       start: moment().hours(0).minutes(0).seconds(0),
-      finish: moment().hours(0).minutes(0).seconds(0).add(2, 'hours')
+      finish: moment().hours(0).minutes(0).seconds(0).add(1, 'hours').add(30, 'minutes')
     },
     where: {
+      name: "",
       address: ""
     },
     cost: []
@@ -45,23 +47,29 @@ function eventsAdd2Ctrl(
       category: vm.newEvent.category,
       description: vm.newEvent.description,
       when: {
-        start: vm.newEvent.when.start.format(),
-        finish: vm.newEvent.when.finish.format()
+        start: vm.eventStartDate,
+        finish: vm.eventEndDate
       },
       where: {
+        name: vm.newEvent.where.name,
         address: vm.newEvent.where.address
       },
       cost: vm.newEvent.cost
     }
-    if(vm.hasLocation){
+    if(vm.exactLocation){
       event.where.location = {
         type: 'Point',
-        coordinates: [vm.mapCursor.lng, vm.mapCursor.lat]
+        coordinates: [vm.cursor.location.longitude, vm.cursor.location.latitude]
       };
     }
     if(event.title=="" ||
-      event.category==""){
+      event.category=="" ||
+      event.description=="" ||
+      event.where.name=="" ||
+      event.where.address==""
+    ){
       vm.formError = "Existen campos sin completar en el formulario. Revíselos e intente nuevamente.";
+      return;
     }
     var confDialog = "Al crear el evento confirma que éste está en concordancia con "+
       "las normas de conducta de Astir. ¿Desea crear el evento \""+ vm.newEvent.title +"\"?";
@@ -76,24 +84,7 @@ function eventsAdd2Ctrl(
       });
     }
   }
-  /*
-  vm.openCalendar = function(){
-    var modalInstance = $uibModal.open({
-      templateUrl: '/common/calendar-modal/calendar-modal.view.html',
-      controller: 'calendarModalCtrl as vm',
-      resolve: {
-        dateData: function(){
-          return {
-            date: vm.newEvent.when
-          }
-        }
-      }
-    });
-    modalInstance.result.then(function (data) {
-      vm.newEvent.when = data;
-    });
-  };
-  */
+
   /*
    * Event Cost options
    */
@@ -163,14 +154,21 @@ function eventsAdd2Ctrl(
   vm.durationIsMeridian = false;
   vm.map = {
     center: {
-      latitude: -35.433333,
-      longitude: -71.666667
+      latitude: -35.42646956139815,
+      longitude: -71.6656744480133
     },
-    zoom: 10,
+    zoom: 13,
     events: {
       click: function(map, eventName, arguments){
         vm.cursor.location.latitude = arguments[0].latLng.lat();
         vm.cursor.location.longitude = arguments[0].latLng.lng();
+        var latlng = new vm.maps.LatLng(vm.cursor.location.latitude, vm.cursor.location.longitude);
+        vm.geocoder.geocode({
+          'latLng': latlng
+        }, function(results, status){
+          vm.newEvent.where.address = results[0].formatted_address;
+          $scope.$apply();
+        });
         $scope.$apply();
       }
     }
@@ -182,4 +180,11 @@ function eventsAdd2Ctrl(
       longitude: -71.666667
     }
   }
+  vm.geocoder = null;
+  vm.maps = null;
+  uiGmapGoogleMapApi.then(function(maps) {
+    vm.geocoder = new maps.Geocoder();
+    vm.maps = maps;
+  });
+  vm.exactLocation = false;
 }
