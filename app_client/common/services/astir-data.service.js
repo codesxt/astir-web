@@ -3,8 +3,18 @@ angular
 .service('astirDataSvc', astirData);
 
 function astirData($http, authSvc){
-  var getEvents = function(){
-    return $http.get('/api/v1/events');
+  var getEvents = function(
+    pageNumber = 0,
+    pageSize = 1
+  ){
+    var query = '/api/v1/events';
+    var queryParams = "";
+    if(pageNumber != null && pageSize != null){
+      queryParams = queryParams + "page[number]=" + pageNumber;
+      queryParams = queryParams + "&page[size]=" + pageSize;
+    }
+    var queryUrl = query + "?" + queryParams;
+    return $http.get(queryUrl);
   };
   var createEvent = function(newEvent){
     return $http.post('/api/v1/events', {

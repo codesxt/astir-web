@@ -4,11 +4,18 @@ angular.module('AstirWebApp')
 function eventsListCtrl(moment, astirDataSvc, authSvc, $location){
   var vm = this;
   vm.events = [];
-  vm.formError
+  vm.formError = "";
+  vm.pageNumber = 1;
+  vm.pageSize = 5;
+  vm.pageTotalItems = 0;
+  vm.pageChanged = () => {
+    vm.getData();
+  };
   vm.getData = function(){
-    astirDataSvc.getEvents()
+    astirDataSvc.getEvents(vm.pageNumber-1, vm.pageSize)
       .success(function(res){
         vm.events = res.data;
+        vm.pageTotalItems = res.meta["total-items"];
         console.log("Eventos recibidos de la API.");
       })
       .error(function(e){

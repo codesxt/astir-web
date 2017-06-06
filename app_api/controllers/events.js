@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 var Event = mongoose.model('Event');
 
+let JsonApiQueryParserClass = require('jsonapi-query-parser');
+let JsonApiQueryParser = new JsonApiQueryParserClass();
+
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
   res.json(content);
@@ -8,17 +11,25 @@ var sendJSONresponse = function(res, status, content) {
 
 module.exports.eventsList = function (req, res) {
   var hostname = req.headers.host;
+  var requestData = JsonApiQueryParser.parseRequest(req.url);
+  var pageNumber  = requestData.queryData.page.number  || 0;
+  var pageSize    = requestData.queryData.page.size    || 0;
+  console.log(requestData);
+  var query = {
+    "when.start": {
+      $gt: new Date()
+    }
+  };
   Event.find(
-    {
-      "when.start": {
-        $gt: new Date()
-      }
-    },
+    query
+    ,
     null,
     {
       sort:{
         "when.start":1
-      }
+      },
+      skip:pageNumber*pageSize,
+      limit:pageSize*1
     },
     function(err, events){
       if(err){
@@ -26,11 +37,17 @@ module.exports.eventsList = function (req, res) {
         sendJSONresponse(res, 400, err);
       }else{
         //console.log(events);
-        sendJSONresponse(res, 201, {
-          links: {
-            self: hostname+'/api/v1/events'
-          },
-          data: events
+        Event.count(query, (err, count) => {
+          sendJSONresponse(res, 201, {
+            meta: {
+              "total-pages": count/pageSize,
+              "total-items": count
+            },
+            links: {
+              self: hostname+'/api/v1/events'
+            },
+            data: events
+          });
         });
       }
     });

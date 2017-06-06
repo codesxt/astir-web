@@ -32,4 +32,13 @@
     </tr>
   </tbody>
   </table>
+  <ul
+    uib-pagination
+    total-items="vm.pageTotalItems"
+    items-per-page="vm.pageSize"
+    previous-text="Anterior"
+    next-text="Siguiente"
+    ng-model="vm.pageNumber"
+    ng-change="vm.pageChanged()">
+  </ul>
 </div>
