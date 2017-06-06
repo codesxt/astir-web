@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var Event = mongoose.model('Event');
 
-let JsonApiQueryParserClass = require('jsonapi-query-parser');
-let JsonApiQueryParser = new JsonApiQueryParserClass();
+var JsonApiQueryParserClass = require('jsonapi-query-parser');
+var JsonApiQueryParser = new JsonApiQueryParserClass();
 
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
