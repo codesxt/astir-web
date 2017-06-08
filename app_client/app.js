@@ -4,6 +4,8 @@ angular.module('AstirWebApp', [
   'ui.bootstrap',
   'angularMoment',
   'uiGmapgoogle-maps',
+  'uiCropper',
+  'ngFileUpload'
 ]);
 
 function config ($routeProvider, $logProvider, uiGmapGoogleMapApiProvider) {

@@ -8,6 +8,7 @@ var auth = jwt({
 
 var ctrlEvents = require('../controllers/events');
 var ctrlAuth = require('../controllers/authentication');
+var ctrlUpload = require('../controllers/upload');
 
 var ctrlTest = require('../controllers/test');
 
@@ -21,5 +22,7 @@ router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
 
 router.get('/test/events', ctrlTest.eventsList);
+
+router.post('/upload', ctrlUpload.upload);
 
 module.exports = router;

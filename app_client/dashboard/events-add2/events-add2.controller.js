@@ -8,7 +8,10 @@ function eventsAdd2Ctrl(
   astirDataSvc,
   $location,
   $scope,
-  uiGmapGoogleMapApi){
+  uiGmapGoogleMapApi,
+  Upload,
+  $timeout
+){
   var vm = this;
   vm.pageHeader = {
     title: 'Astir',
@@ -61,6 +64,9 @@ function eventsAdd2Ctrl(
         type: 'Point',
         coordinates: [vm.cursor.location.longitude, vm.cursor.location.latitude]
       };
+    }
+    if(vm.cropper.croppedImage){
+      event.banner = vm.cropper.croppedImage;
     }
     if(event.title=="" ||
       event.category=="" ||
@@ -187,4 +193,41 @@ function eventsAdd2Ctrl(
     vm.maps = maps;
   });
   vm.exactLocation = false;
+
+  // Image cropper
+  vm.cropper = {
+    sourceImage: null,
+    croppedImage: null
+  };
+  var handleFileSelect = function(evt) {
+    var file=evt.currentTarget.files[0];
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+      $scope.$apply(function($scope){
+        vm.cropper.sourceImage=evt.target.result;
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+  angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+
+  // Image upload
+  vm.uploadBanner = () => {
+    //https://angular-file-upload-cors-srv.appspot.com/upload
+    Upload.upload({
+      url: 'http://localhost:3000/api/v1/upload',
+      data: {
+        file: Upload.dataUrltoBlob(vm.cropper.croppedImage, 'ArchivoDePrueba.png')
+      },
+    }).then(function (response) {
+      $timeout(function () {
+        vm.result = response.data;
+      });
+    }, function (response) {
+      if (response.status > 0) $scope.errorMsg = response.status
+        + ': ' + response.data;
+    }, function (evt) {
+      vm.progress = parseInt(100.0 * evt.loaded / evt.total);
+    });
+  }
 }

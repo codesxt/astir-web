@@ -9,6 +9,7 @@ var eventSchema = new mongoose.Schema({
   title: {type: String, required: true},
   category: {type: String, required: true},
   description: {type: String, required: true},
+  banner: {type: String, required: false},
   when: {
     start: {type: Date, required: true},
     finish: {type: Date, required: false}

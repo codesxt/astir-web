@@ -66,6 +66,9 @@ module.exports.eventsCreate = function (req, res) {
   if(eventData.where.location){
     newEvent.where.location = eventData.where.location;
   }
+  if(eventData.banner){
+    newEvent.banner = eventData.banner;
+  }
   newEvent.cost = eventData.cost;
   newEvent.save(function(err){
     if(err){
