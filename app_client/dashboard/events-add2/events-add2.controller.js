@@ -216,6 +216,7 @@ function eventsAdd2Ctrl(
     //https://angular-file-upload-cors-srv.appspot.com/upload
     Upload.upload({
       url: 'http://localhost:3000/api/v1/upload/'+eventId,
+      method: 'POST',
       data: {
         file: Upload.dataUrltoBlob(image, 'ArchivoDePrueba.png'),
         test: "someValue"
