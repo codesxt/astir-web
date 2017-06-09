@@ -17,8 +17,7 @@ var webAppClientRouter = require('./app_server/routes/index');
 var app = express();
 debug("Configuring Express app...");
 app.use(logger('dev'));
-app.use(cors());
-app.options('*', cors({
+app.use(cors({
   origin: 'http://astir.herokuapp.com/',
   optionsSuccessStatus: 200
 }));
