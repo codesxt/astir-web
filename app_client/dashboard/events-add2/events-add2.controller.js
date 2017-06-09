@@ -65,9 +65,6 @@ function eventsAdd2Ctrl(
         coordinates: [vm.cursor.location.longitude, vm.cursor.location.latitude]
       };
     }
-    if(vm.cropper.croppedImage){
-      event.banner = vm.cropper.croppedImage;
-    }
     if(event.title=="" ||
       event.category=="" ||
       event.description=="" ||
@@ -83,7 +80,10 @@ function eventsAdd2Ctrl(
     if(conf){
       astirDataSvc.createEvent(event)
       .success(function (data) {
-        $location.path('/dashboard/events')
+        if(vm.cropper.croppedImage){
+          vm.uploadBanner(data._id);
+        }
+        $location.path('/dashboard/events');
       })
       .error(function (data) {
         vm.formError = "El evento no pudo ser creado. Por favor, revise que los datos hayan sido ingresados correctamente.";
@@ -212,12 +212,13 @@ function eventsAdd2Ctrl(
   angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
 
   // Image upload
-  vm.uploadBanner = () => {
+  vm.uploadBanner = (eventId = "sdhlasjd1wkjh132h1l2h5j15hjk52h") => {
     //https://angular-file-upload-cors-srv.appspot.com/upload
     Upload.upload({
-      url: 'http://localhost:3000/api/v1/upload',
+      url: 'http://localhost:3000/api/v1/upload/'+eventId,
       data: {
-        file: Upload.dataUrltoBlob(vm.cropper.croppedImage, 'ArchivoDePrueba.png')
+        file: Upload.dataUrltoBlob(vm.cropper.croppedImage, 'ArchivoDePrueba.png'),
+        test: "someValue"
       },
     }).then(function (response) {
       $timeout(function () {

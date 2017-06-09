@@ -23,6 +23,6 @@ router.post('/login', ctrlAuth.login);
 
 router.get('/test/events', ctrlTest.eventsList);
 
-router.post('/upload', ctrlUpload.upload);
+router.post('/upload/:eventId', ctrlUpload.uploadBanner);
 
 module.exports = router;
