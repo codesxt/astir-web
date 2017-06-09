@@ -81,8 +81,9 @@ function eventsAdd2Ctrl(
       astirDataSvc.createEvent(event)
       .success(function (data) {
         if(vm.cropper.croppedImage){
-          vm.uploadBanner(vm.cropper.croppedImage, data._id);          
-        //$location.path('/dashboard/events');
+          vm.uploadBanner(vm.cropper.croppedImage, data._id);
+          //$location.path('/dashboard/events');
+        }
       })
       .error(function (data) {
         vm.formError = "El evento no pudo ser creado. Por favor, revise que los datos hayan sido ingresados correctamente.";
