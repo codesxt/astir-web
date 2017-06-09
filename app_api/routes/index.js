@@ -5,7 +5,6 @@ var auth = jwt({
   secret: process.env.JWT_SECRET,
   userProperty: 'payload'
 });
-var cors = require('cors');
 
 var ctrlEvents = require('../controllers/events');
 var ctrlAuth = require('../controllers/authentication');
@@ -24,7 +23,6 @@ router.post('/login', ctrlAuth.login);
 
 router.get('/test/events', ctrlTest.eventsList);
 
-router.options('/upload/:eventId', cors());
 router.post('/upload/:eventId', ctrlUpload.uploadBanner);
 
 module.exports = router;

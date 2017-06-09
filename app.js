@@ -18,6 +18,7 @@ var app = express();
 debug("Configuring Express app...");
 app.use(logger('dev'));
 app.use(cors());
+app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
