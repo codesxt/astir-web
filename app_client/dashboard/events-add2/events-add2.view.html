@@ -31,7 +31,7 @@
       <label class="control-label col-sm-2" for="banner">Imagen original:</label>
       <div class="col-sm-10">
         <input type="file" id="fileInput" />
-        <div style="height:480px;">
+        <div style="height:480px;" ng-show="vm.cropper.sourceImage!=null">
           <ui-cropper
             image="vm.cropper.sourceImage"
             result-image="vm.cropper.croppedImage"
@@ -46,7 +46,8 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="banner">Imagen resultante:</label>
         <div class="col-sm-10">
-          <img ng-src="{{vm.cropper.croppedImage}}" />
+          <img ng-src="{{vm.cropper.croppedImage}}" /> <br/><br/>
+          <button class="btn btn-danger" ng-click="vm.removeImage()">Remover imagen</button>
         </div>
       </div>
     </div>

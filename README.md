@@ -13,4 +13,4 @@ Roadmap:
     * https://github.com/danialfarid/ng-file-upload
     * http://jsfiddle.net/danialfarid/xxo3sk41/590/
     * https://ciphertrick.com/2015/12/07/file-upload-with-angularjs-and-nodejs/
-[ ] Implement AWS s3 bucket to upload image files
+[X] Implement AWS s3 bucket to upload image files

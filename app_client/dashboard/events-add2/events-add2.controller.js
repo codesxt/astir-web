@@ -210,7 +210,12 @@ function eventsAdd2Ctrl(
     reader.readAsDataURL(file);
   };
   angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
-
+  vm.removeImage = () => {
+    vm.cropper = {
+      sourceImage: null,
+      croppedImage: null
+    };
+  }
   // Image upload
   vm.uploadBanner = (image, eventId) => {
     //https://angular-file-upload-cors-srv.appspot.com/upload
