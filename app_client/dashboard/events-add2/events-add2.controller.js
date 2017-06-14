@@ -81,7 +81,7 @@ function eventsAdd2Ctrl(
       astirDataSvc.createEvent(event)
       .success(function (data) {
         if(vm.cropper.croppedImage){
-          vm.uploadBanner(vm.cropper.croppedImage, data._id);
+          vm.uploadBanner(vm.cropper.croppedImage, data.id);
           //$location.path('/dashboard/events');
         }
       })
@@ -223,7 +223,7 @@ function eventsAdd2Ctrl(
       url: 'http://astir.herokuapp.com/api/v1/upload/'+eventId,
       method: 'POST',
       data: {
-        file: Upload.dataUrltoBlob(image, 'ArchivoDePrueba.png'),
+        file: Upload.dataUrltoBlob(image, 'Banner.png'),
         test: "someValue"
       },
     }).then(function (response) {

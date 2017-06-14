@@ -14,7 +14,6 @@ module.exports.eventsList = function (req, res) {
   var requestData = JsonApiQueryParser.parseRequest(req.url);
   var pageNumber  = requestData.queryData.page.number  || 0;
   var pageSize    = requestData.queryData.page.size    || 0;
-  console.log(requestData);
   var query = {
     "when.start": {
       $gt: new Date()
@@ -53,7 +52,6 @@ module.exports.eventsList = function (req, res) {
     });
 };
 module.exports.eventsCreate = function (req, res) {
-  console.log(req.body);
   var eventData = req.body.data.attributes;
   var newEvent = new Event();
   newEvent.title = eventData.title;
@@ -76,26 +74,61 @@ module.exports.eventsCreate = function (req, res) {
       sendJSONresponse(res, 400, err);
     }else{
       console.log(newEvent);
-      sendJSONresponse(res, 201, newEvent);
+      sendJSONresponse(res, 201, {
+        type:"events",
+        id: newEvent._id,
+        attributes: {
+          description: newEvent.description,
+          category: newEvent.category,
+          cost: newEvent.cost,
+          banner: newEvent.banner,
+          where: newEvent.where,
+          when: newEvent.when
+        },
+        links: {
+          self: req.headers.host+'/api/v1/events/'+newEvent._id
+        }
+      });
     }
   });
-  /*
-  Event.create(req.body,
-    function(err, event){
-      if(err){
-        console.log(err);
-        sendJSONresponse(res, 400, err);
-      }else{
-        console.log(event);
-        sendJSONresponse(res, 201, event);
-      }
-    });*/
 };
-module.exports.eventsReadOne = function (req, res) { };
+module.exports.eventsReadOne = function (req, res) {
+  var eventId = req.params.eventId;
+  if(eventId){
+    Event.findById(eventId)
+    .exec((err, event) => {
+      if(err){
+        sendJSONresponse(res, 404, err);
+        return;
+      }
+      sendJSONresponse(res, 200, {
+        _id: event._id,
+        type: "events",
+        attributes: {
+          description: event.description,
+          category: event.category,
+          cost: event.cost,
+          banner: event.banner,
+          where: event.where,
+          when: event.when
+        },
+        relationships: {
+
+        },
+        links: {
+          self: req.headers.host+'/api/v1/events/'+eventId
+        }
+      });
+    })
+  }else{
+    sendJSONresponse(res, 400, {
+      "message": "Es necesario especificar el ID del evento en la consulta."
+    })
+  }
+};
 module.exports.eventsUpdateOne = function (req, res) { };
 module.exports.eventsDeleteOne = function (req, res) {
   var eventId = req.params.eventId;
-  console.log("ID: "+eventId);
   if(eventId){
     Event.findByIdAndRemove(eventId)
     .exec(
@@ -108,8 +141,8 @@ module.exports.eventsDeleteOne = function (req, res) {
       }
     )
   }else{
-    sendJSONresponse(res, 404, {
-      "message": "No se encontró el evento."
+    sendJSONresponse(res, 400, {
+      "message": "Es necesario especificar el ID del evento en la consulta."
     })
   }
 };
