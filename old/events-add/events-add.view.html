@@ -1,0 +1,149 @@
+<div class="container app-container">
+  <h1>Añadir un nuevo evento</h1>
+  <dashboard-navigation></dashboard-navigation>
+  <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
+  <h3>Ingrese datos del evento</h3>
+  <form class="form-horizontal" ng-submit="vm.onSubmit()">
+    <div class="form-group page-list">
+      <div class="btn-group btn-group-justified">
+        <a ng-repeat="page in vm.formPages" ng-click="vm.selectPage(page.value)" class="btn btn-default">
+          {{page.value}}. {{ page.name }}
+        </a>
+      </div>
+    </div>
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==1">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="title">Título del Evento:</label>
+        <div class="col-sm-10">
+          <input type="name" class="form-control" id="title" placeholder="Ingrese el título del evento" ng-model="vm.newEvent.title">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="name">Categoría:</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="category" ng-model="vm.newEvent.category">
+            <option ng-repeat="cat in vm.categories" value="{{cat.value}}">{{cat.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="name">Descripción:</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" rows="5" placeholder="Ingrese una descripción del evento" ng-model="vm.newEvent.description"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==2">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="name">Fecha de Inicio:</label>
+        <div class="col-sm-5">
+          <div class="input-group">
+            <input type="text" class="form-control" value="{{ vm.newEvent.when.start | amDateFormat:'dddd DD [de] MMMM YYYY, h:mm:ss a'}}">
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="vm.openCalendar()" type="button">Editar</button>
+            </span>
+          </div>
+          <!--<input class="form-control" type="datetime-local" value="{{vm.newEvent.when.start}}" />-->
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="name">Fecha de término:</label>
+        <div class="col-sm-5">
+          <div class="input-group">
+            <input type="text" class="form-control" value="{{ vm.newEvent.when.finish | amDateFormat:'dddd DD [de] MMMM YYYY, h:mm:ss a'}}">
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="vm.openCalendar()" type="button">Editar</button>
+            </span>
+          </div>
+          <!--<input class="form-control" type="datetime-local" value="{{vm.newEvent.when.finish}}" />-->
+        </div>
+      </div>
+    </div>
+
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==3">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="name">Dirección del Evento:</label>
+        <div class="col-sm-7">
+          <input type="name" class="form-control" id="name" placeholder="Ingrese la ubicación del evento" ng-model="vm.newEvent.where.address">
+        </div>
+        <div class="col-sm-3">
+         <button class="btn btn-default" ng-click="vm.toggleLocation()" type="button" ng-class="{active : vm.hasLocation}">
+           Añadir Geolocalización
+         </button>
+       </div>
+      </div>
+      <div class="row" ng-show="vm.hasLocation">
+        <div class="col-md-offset-2 col-md-10">
+          <leaflet
+          width="100%"
+          id="locationSelect"
+          lf-center="vm.center"
+          tiles="vm.tiles"
+          markers="vm.markers">
+          </leaflet>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==4">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="cost-text">Costo del evento:</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="cost-text" placeholder="Texto" ng-model="vm.newCost.text">
+        </div>
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="cost-value" placeholder="Texto" ng-model="vm.newCost.value">
+        </div>
+        <div class="col-sm-1">
+          <button class="btn btn-default" ng-click="vm.addCost()" type="button">+</button>
+        </div>
+        <div class="col-sm-5">
+          <div ng-show="vm.newEvent.cost == ''">
+            <b>Entrada Liberada</b><br/>Si el evento tiene costo, añádalo utilizando el formulario a la izquierda.
+          </div>
+          <table class="col-md-12 table table-stripped table-condensed" ng-show="vm.newEvent.cost != ''">
+            <thead>
+              <tr>
+              <th>Ítem</th>
+              <th>Valor</th>
+              <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="cost in vm.newEvent.cost">
+                <td>{{cost.text}}</td>
+                <td>$ {{cost.value}}</td>
+                <td>
+                  <button class="btn btn-default" ng-click="vm.removeCost(cost)" type="button">-</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-page panel panel-default" ng-show="vm.formPageSelected==5">
+      <p> Revise la información antes de confirmar el evento: </p>
+      <p> Nombre del Evento: {{ vm.newEvent.title }}</p>
+      <p> Categoría: {{ vm.newEvent.category }}</p>
+      <p ng-if="vm.newEvent.cost.length==0">
+        No se ha registrado ningún costo en el evento, por lo que aparecerá
+        como "Entrada Liberada". Si esto es incorrecto, por favor revise la
+        sección "Costo". </p>
+      <p ng-if="vm.newEvent.cost.length>0">
+        El evento cuenta con los siguientes valores:
+        <span ng-repeat="cost in vm.newEvent.cost">
+          {{ cost.text }}: ${{ cost.value }} -
+        </span>
+      </p>
+      <p> Ubicación del evento: {{ vm.newEvent.where.address }} </p>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Registrar Evento</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

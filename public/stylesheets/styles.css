@@ -177,11 +177,11 @@ header{
 
 /* Angular Animations */
 .view.ng-enter{
-  animation: fadeInUp 1s;
+  animation: fadeIn 1s;
 }
 
 .view.ng-leave{
-  animation: fadeOutDown .3s;
+  animation: fadeOut.3s;
 }
 
 /* Font Faces */

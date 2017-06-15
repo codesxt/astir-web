@@ -26,14 +26,9 @@ function config ($routeProvider, $logProvider, uiGmapGoogleMapApiProvider) {
       controller: 'eventsListCtrl',
       controllerAs: 'vm'
     })
-    .when('/dashboard/events/add-new',{
+    .when('/dashboard/events/add',{
       templateUrl: 'dashboard/events-add/events-add.view.html',
       controller: 'eventsAddCtrl',
-      controllerAs: 'vm'
-    })
-    .when('/dashboard/events/add',{
-      templateUrl: 'dashboard/events-add2/events-add2.view.html',
-      controller: 'eventsAdd2Ctrl',
       controllerAs: 'vm'
     })
     .otherwise({redirectTo: '/'});

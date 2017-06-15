@@ -1,8 +1,16 @@
-// hrafnsmal: Pato en Steam
 angular.module('AstirWebApp')
 .controller('eventsAddCtrl', eventsAddCtrl);
 
-function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location, $scope, leafletData){
+function eventsAddCtrl(
+  moment,
+  $uibModal,
+  astirDataSvc,
+  $location,
+  $scope,
+  uiGmapGoogleMapApi,
+  Upload,
+  $timeout
+){
   var vm = this;
   vm.pageHeader = {
     title: 'Astir',
@@ -19,18 +27,7 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location, $scope, leafl
     {value: "movie", name: "Cine"},
     {value: "outdoors", name: "Aire Libre"}
   ];
-  vm.formPages = [
-    {value: "1", name:"Datos Generales"},
-    {value: "2", name:"Fecha y Duración"},
-    {value: "3", name:"Ubicación"},
-    {value: "4", name:"Costo"},
-    {value: "5", name:"Confirmación"}
-  ]
-  vm.formPageSelected = vm.formPages[0].value;
   vm.formError = "";
-  vm.selectPage = function(pageNumber){
-    vm.formPageSelected = pageNumber;
-  }
 
   vm.newEvent = {
     title: "",
@@ -38,66 +35,15 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location, $scope, leafl
     description: "",
     when: {
       start: moment().hours(0).minutes(0).seconds(0),
-      finish: moment().hours(0).minutes(0).seconds(0).add(2, 'hours')
+      finish: moment().hours(0).minutes(0).seconds(0).add(1, 'hours').add(30, 'minutes')
     },
     where: {
+      name: "",
       address: ""
     },
     cost: []
   };
-  vm.onSubmit = function (){
-    var event = {
-      title: vm.newEvent.title,
-      category: vm.newEvent.category,
-      description: vm.newEvent.description,
-      when: {
-        start: vm.newEvent.when.start.format(),
-        finish: vm.newEvent.when.finish.format()
-      },
-      where: {
-        address: vm.newEvent.where.address
-      },
-      cost: vm.newEvent.cost
-    }
-    if(vm.hasLocation){
-      event.where.location = {
-        type: 'Point',
-        coordinates: [vm.mapCursor.lng, vm.mapCursor.lat]
-      };
-    }
-    if(event.title=="" ||
-      event.category==""){
-      vm.formError = "Existen campos sin completar en el formulario. Revíselos e intente nuevamente.";
-    }
-    var confDialog = "Al crear el evento confirma que éste está en concordancia con "+
-      "las normas de conducta de Astir. ¿Desea crear el evento \""+ vm.newEvent.title +"\"?";
-    var conf = confirm(confDialog);
-    if(conf){
-      astirDataSvc.createEvent(event)
-      .success(function (data) {
-        $location.path('/dashboard/events')
-      })
-      .error(function (data) {
-        vm.formError = "El evento no pudo ser creado. Por favor, revise que los datos hayan sido ingresados correctamente.";
-      });
-    }
-  }
-  vm.openCalendar = function(){
-    var modalInstance = $uibModal.open({
-      templateUrl: '/common/calendar-modal/calendar-modal.view.html',
-      controller: 'calendarModalCtrl as vm',
-      resolve: {
-        dateData: function(){
-          return {
-            date: vm.newEvent.when
-          }
-        }
-      }
-    });
-    modalInstance.result.then(function (data) {
-      vm.newEvent.when = data;
-    });
-  };
+
   /*
    * Event Cost options
    */
@@ -123,67 +69,184 @@ function eventsAddCtrl(moment, $uibModal, astirDataSvc, $location, $scope, leafl
     vm.newEvent.cost.splice(index, 1);
   }
 
-  /*
-   * Event Location Options
-   */
-   vm.mapCursor = {
-     lat: -35.4265765,
-     lng: -71.6661856
-   };
-   angular.extend(vm, {
-     defaults: {
-         scrollWheelZoom: false
-     },
-     center: {
-       lat: vm.mapCursor.lat,
-       lng: vm.mapCursor.lng,
-       zoom: 15
-     },
-     tiles: {
-       name: 'Mapbox Outdoors',
-       url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-       type: 'xyz',
-       options: {
-         apikey: 'pk.eyJ1IjoiY29kZXN4dCIsImEiOiJjaWc4ZW95Z2YwOTRndnhrdjBvZHBxbW95In0.thmYteAR25Fu-fJH2I3ZTA',
-         mapid: 'codesxt.cig8eowrz09fwt6lyhcmpfzst'
-       }
-     },
-     markers : {
-       selectedLocation: {
-         lat: vm.mapCursor.lat,
-         lng: vm.mapCursor.lng,
-         focus: true,
-         message: "Ubicación seleccionada: "+vm.mapCursor.lat+","+vm.mapCursor.lng
-       }
-     }
-   });
-   vm.hasLocation = false;
-   vm.toggleLocation = function(){
-     vm.hasLocation = !vm.hasLocation;
-     setTimeout(function(){
-       leafletData.getMap().then(function (map) {
-         map.invalidateSize();
-       });
-     }, 100);
+   /*
+    * Calendar and dates code
+    */
+   vm.durationChanged = function(){
+     var hours = vm.eventDuration.getHours();
+     var minutes = vm.eventDuration.getMinutes();
+     var d = new Date(vm.eventStartDate.getTime());
+     d.setHours(
+       d.getHours() + hours,
+       d.getMinutes() + minutes
+     );
+     vm.eventEndDate = d;
    }
-   $scope.$on("leafletDirectiveMap.locationSelect.click", function(event, args){
-     var leafEvent = args.leafletEvent;
-     vm.mapCursor.lat = leafEvent.latlng.lat;
-     vm.mapCursor.lng = leafEvent.latlng.lng;
-     var message = "Ubicación seleccionada: "+vm.mapCursor.lat+","+vm.mapCursor.lng;
-     var selectedLocation = {
-       lat: vm.mapCursor.lat,
-       lng: vm.mapCursor.lng,
-       focus: true,
-       message: message
-     }
-     angular.extend(vm, {
-       markers: {selectedLocation},
-       center: {
-         lat: vm.mapCursor.lat,
-         lng: vm.mapCursor.lng,
-         zoom: 15
-       },
-     });
-   });
+   var tempDate = new Date();
+   tempDate.setDate(tempDate.getDate()+1);
+   tempDate.setHours(12, 0, 0, 0);
+   vm.eventStartDate = tempDate;
+   vm.eventEndDate = new Date();
+   vm.eventDuration = new Date(0,0,0,1,30,0);
+   vm.durationChanged();
+   vm.calendarFormat = 'dd-MMMM-yyyy';
+   vm.isCalendarOpen = false;
+   vm.calendarOptions = {
+    formatYear: 'yy',
+    datepickerMode: 'day',
+    minMode:'day',
+    maxMode:'day',
+    initDate: null,
+    maxDate: null,
+    minDate: null,
+    startingDay: 1
+  };
+  vm.openCalendar = function(){
+    vm.isCalendarOpen = true;
+  }
+  vm.changedTime = function(){
+    vm.durationChanged();
+  };
+  vm.hstep = 1;
+  vm.mstep = 5;
+  vm.ismeridian = true;
+  vm.durationIsMeridian = false;
+
+  /*
+   * Map code
+   */
+  vm.map = {
+    center: {
+      latitude: -35.42646956139815,
+      longitude: -71.6656744480133
+    },
+    zoom: 13,
+    events: {
+      click: function(map, eventName, arguments){
+        vm.cursor.location.latitude = arguments[0].latLng.lat();
+        vm.cursor.location.longitude = arguments[0].latLng.lng();
+        var latlng = new vm.maps.LatLng(vm.cursor.location.latitude, vm.cursor.location.longitude);
+        vm.geocoder.geocode({
+          'latLng': latlng
+        }, function(results, status){
+          vm.newEvent.where.address = results[0].formatted_address;
+          $scope.$apply();
+        });
+        $scope.$apply();
+      }
+    }
+  };
+  vm.cursor = {
+    id: 0,
+    location: {
+      latitude: -35.433333,
+      longitude: -71.666667
+    }
+  }
+  vm.geocoder = null;
+  vm.maps = null;
+  uiGmapGoogleMapApi.then(function(maps) {
+    vm.geocoder = new maps.Geocoder();
+    vm.maps = maps;
+  });
+  vm.exactLocation = false;
+
+  /*
+   * Image cropper code
+   */
+  vm.cropper = {
+    sourceImage: null,
+    croppedImage: null
+  };
+  var handleFileSelect = function(evt) {
+    var file=evt.currentTarget.files[0];
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+      $scope.$apply(function($scope){
+        vm.cropper.sourceImage=evt.target.result;
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+  angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+  vm.removeImage = () => {
+    vm.cropper = {
+      sourceImage: null,
+      croppedImage: null
+    };
+  }
+  // Image upload
+  vm.uploadBanner = (image, eventId) => {
+    //https://angular-file-upload-cors-srv.appspot.com/upload
+    Upload.upload({
+      url: 'http://astir.herokuapp.com/api/v1/upload/'+eventId,
+      method: 'POST',
+      data: {
+        file: Upload.dataUrltoBlob(image, 'Banner.png'),
+        test: "someValue"
+      },
+    }).then(function (response) {
+      $timeout(function () {
+        vm.result = response.data;
+      });
+    }, function (response) {
+      if (response.status > 0) $scope.errorMsg = response.status
+        + ': ' + response.data;
+    }, function (evt) {
+      vm.progress = parseInt(100.0 * evt.loaded / evt.total);
+    });
+  }
+
+  /*
+   * Event submit code
+   */
+
+  vm.onSubmit = function (){
+    var event = {
+      title: vm.newEvent.title,
+      category: vm.newEvent.category,
+      description: vm.newEvent.description,
+      when: {
+        start: vm.eventStartDate,
+        finish: vm.eventEndDate
+      },
+      where: {
+        name: vm.newEvent.where.name,
+        address: vm.newEvent.where.address
+      },
+      cost: vm.newEvent.cost
+    }
+    if(vm.exactLocation){
+      event.where.location = {
+        type: 'Point',
+        coordinates: [vm.cursor.location.longitude, vm.cursor.location.latitude]
+      };
+    }
+    if(event.title=="" ||
+      event.category=="" ||
+      event.description=="" ||
+      event.where.name=="" ||
+      event.where.address==""
+    ){
+      vm.formError = "Existen campos sin completar en el formulario. Revíselos e intente nuevamente.";
+      return;
+    }
+    var confDialog = "Al crear el evento confirma que éste está en concordancia con "+
+      "las normas de conducta de Astir. ¿Desea crear el evento \""+ vm.newEvent.title +"\"?";
+    var conf = confirm(confDialog);
+    if(conf){
+      astirDataSvc.createEvent(event)
+      .success(function (data) {
+        if(vm.cropper.croppedImage){
+          vm.uploadBanner(vm.cropper.croppedImage, data.id);
+          $location.path('/dashboard/events');
+        }else{
+          $location.path('/dashboard/events');
+        }
+      })
+      .error(function (data) {
+        vm.formError = "El evento no pudo ser creado. Por favor, revise que los datos hayan sido ingresados correctamente.";
+      });
+    }
+  }
 }
