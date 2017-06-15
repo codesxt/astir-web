@@ -1,0 +1,20 @@
+<div class="container app-container">
+  <div ng-show="vm.formError">
+    <br/>
+    <div role="alert" class="alert alert-danger">{{ vm.formError }}</div>
+  </div>
+  <div ng-show="vm.event != null">
+    <h1>{{vm.event.title}}</h1>
+    <p>{{vm.event.description}}</p>
+    <p><strong>Categoría: </strong>{{vm.event.category}}</p>
+    <div class="alert alert-dismissible alert-info">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Revisa este evento en Astir</strong>
+      <p>Para revisar este evento en detalle y otros más, te recomendamos instalar
+        la aplicación Astir, disponible de manera gratuita para Android</p>
+      <a href="/downloads/astir.apk" type="button" class="btn btn-success" ng-click="vm.deleteEvent(event)">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Android
+      </a>
+    </div>
+  </div>
+</div>

@@ -40,4 +40,8 @@ function eventsListCtrl(moment, astirDataSvc, authSvc, $location){
       });;
     }
   };
+
+  vm.viewEvent = function(event){
+    $location.path("/event-view/"+event._id);
+  }
 }

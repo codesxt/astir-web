@@ -31,6 +31,11 @@ function config ($routeProvider, $logProvider, uiGmapGoogleMapApiProvider) {
       controller: 'eventsAddCtrl',
       controllerAs: 'vm'
     })
+    .when('/event-view/:eventId', {
+      templateUrl: 'event-view/event-view.view.html',
+      controller: 'eventViewCtrl',
+      controllerAs: 'vm'
+    })
     .otherwise({redirectTo: '/'});
 
   uiGmapGoogleMapApiProvider.configure({

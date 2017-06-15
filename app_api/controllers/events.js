@@ -98,13 +98,16 @@ module.exports.eventsReadOne = function (req, res) {
     Event.findById(eventId)
     .exec((err, event) => {
       if(err){
-        sendJSONresponse(res, 404, err);
+        sendJSONresponse(res, 404, {
+          message: "No se ha encontrado un evento"
+        });
         return;
       }
       sendJSONresponse(res, 200, {
         _id: event._id,
         type: "events",
         attributes: {
+          title: event.title,
           description: event.description,
           category: event.category,
           cost: event.cost,

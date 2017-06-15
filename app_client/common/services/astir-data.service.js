@@ -16,6 +16,11 @@ function astirData($http, authSvc){
     var queryUrl = query + "?" + queryParams;
     return $http.get(queryUrl);
   };
+
+  var getEvent = function(eventId){
+    return $http.get('/api/v1/events/'+eventId);
+  };
+
   var createEvent = function(newEvent){
     return $http.post('/api/v1/events', {
       data: {
@@ -37,6 +42,7 @@ function astirData($http, authSvc){
   }
   return {
     getEvents : getEvents,
+    getEvent : getEvent,
     createEvent : createEvent,
     deleteEvent : deleteEvent
   };
