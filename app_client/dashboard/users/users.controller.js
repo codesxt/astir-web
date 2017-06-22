@@ -1,9 +1,9 @@
 angular.module('AstirWebApp')
-.controller('eventsListCtrl', eventsListCtrl);
+.controller('usersCtrl', usersCtrl);
 
-function eventsListCtrl(moment, astirDataSvc, authSvc, $location){
+function usersCtrl(moment, authSvc, $location, usersSvc){
   var vm = this;
-  vm.events = [];
+  vm.users = [];
   vm.formError = "";
   vm.pageNumber = 1;
   vm.pageSize = 5;
@@ -12,14 +12,13 @@ function eventsListCtrl(moment, astirDataSvc, authSvc, $location){
     vm.getData();
   };
   vm.getData = function(){
-    astirDataSvc.getEvents(vm.pageNumber-1, vm.pageSize)
+    usersSvc.getUsers(vm.pageNumber-1, vm.pageSize)
       .success(function(res){
-        vm.events = res.data;
+        vm.users = res.data;
         vm.pageTotalItems = res.meta["total-items"];
-        console.log("Eventos recibidos de la API.");
       })
       .error(function(e){
-        vm.formError= "Lo sentimos. Algún problema ocurrió en la obtención de eventos. Por favor, intente más tarde.";
+        vm.formError = "Se ha producido un error en la obtención de datos. Error: " + e.message;
       })
   }
   vm.getData();
@@ -37,7 +36,7 @@ function eventsListCtrl(moment, astirDataSvc, authSvc, $location){
       .error(function (e) {
         vm.formError = "Hubo un error al eliminar el evento. Por favor, recargue la página e intente de nuevo.";
         console.log("Error recibido: "+e.message);
-      });      
+      });
       vm.getData();
     }
   };

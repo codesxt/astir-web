@@ -75,8 +75,10 @@ exports.roleAuthorization = function(roles){
         return next();
       }
 
-      res.status(401).json({error: 'You are not authorized to view this content'});
+      res.status(401).json({
+        message: 'No tienes autorización para ver este contenido.'
+      });
       return next('Unauthorized');
-    });  
+    });
   };
 }

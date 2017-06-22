@@ -21,6 +21,16 @@ function config ($routeProvider, $logProvider, uiGmapGoogleMapApiProvider) {
       controller: 'loginCtrl',
       controllerAs: 'vm'
     })
+    .when('/dashboard/users', {
+      templateUrl: 'dashboard/users/users.view.html',
+      controller: 'usersCtrl',
+      controllerAs: 'vm'
+    })
+    .when('/dashboard/userdata', {
+      templateUrl: 'dashboard/userdata/userdata.view.html',
+      controller: 'userdataCtrl',
+      controllerAs: 'vm'
+    })
     .when('/dashboard/events', {
       templateUrl: 'dashboard/events-list/events-list.view.html',
       controller: 'eventsListCtrl',

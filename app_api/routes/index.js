@@ -3,14 +3,21 @@ var router = express.Router();
 var jwt = require('express-jwt');
 var auth = jwt({
   secret: process.env.JWT_SECRET,
-  userProperty: 'payload'
+  userProperty: 'user'
 });
+var roleAuth = require('../controllers/authentication').roleAuthorization;
 
 var ctrlEvents = require('../controllers/events');
 var ctrlAuth = require('../controllers/authentication');
 var ctrlUpload = require('../controllers/upload');
+var ctrlUsers = require('../controllers/users');
 
 var ctrlTest = require('../controllers/test');
+
+var ctrlUsers = require('../controllers/users');
+
+router.get('/users', auth, ctrlAuth.roleAuthorization(['administrator']), ctrlUsers.usersList);
+router.get('/selfuser', auth, ctrlUsers.getSelfUserData);
 
 router.get('/events', ctrlEvents.eventsList);
 router.post('/events', auth, ctrlEvents.eventsCreate);
