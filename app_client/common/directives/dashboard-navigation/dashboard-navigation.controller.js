@@ -1,9 +1,10 @@
 angular.module('AstirWebApp')
 .controller('dashboardNavigationCtrl', dashboardNavigationCtrl);
 
-function dashboardNavigationCtrl($location){
+function dashboardNavigationCtrl($location, authSvc){
   var vm = this;
   vm.isActive = function (viewLocation) {
     return viewLocation === $location.path();
   };
+  vm.userRole = authSvc.currentUser().role;
 }

@@ -1,6 +1,7 @@
-<div class="container app-container">
+<div class="container-fluid app-container">
+<dashboard-navigation></dashboard-navigation>
+<div class="col-md-10">
   <h1>Lista de eventos</h1>
-  <dashboard-navigation></dashboard-navigation>
   <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
   <table class="table table-striped table-bordered events-list-table">
   <caption>Lista con todos los eventos registrados</caption>
@@ -46,4 +47,5 @@
     ng-model="vm.pageNumber"
     ng-change="vm.pageChanged()">
   </ul>
+</div>
 </div>

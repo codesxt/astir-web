@@ -176,13 +176,14 @@ header{
 
 
 /* Angular Animations */
+/*
 .view.ng-enter{
   animation: fadeIn 1s;
 }
 
 .view.ng-leave{
   animation: fadeOut.3s;
-}
+}*/
 
 /* Font Faces */
 @font-face {
@@ -203,3 +204,7 @@ header{
 
 /* Valores para la directiva de mapas de Google */
 .angular-google-map-container { height: 200px; }
+
+.dashboard-navigation {
+  margin-top: 15px;
+}

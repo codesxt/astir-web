@@ -1,14 +1,42 @@
-<div>
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" ng-class="{ active: navvm.isActive('/dashboard/events')}">
-      <a href="/#dashboard/events" aria-controls="home" role="tab" data-toggle="tab">
-        Lista de Eventos
-      </a>
-    </li>
-    <li role="presentation" ng-class="{ active: navvm.isActive('/dashboard/events/add')}">
-      <a href="/#dashboard/events/add" aria-controls="addevent" role="tab" data-toggle="tab">
-        Añadir nuevo evento
-      </a>
-    </li>
-  </ul>
+<div class="col-md-2 list-group dashboard-navigation">
+  <li
+    class="list-group-item"
+    ng-show="navvm.userRole=='administrator'">
+    <strong>Administración</strong>
+  </li>
+  <a
+    href="/#dashboard/users"
+    class="list-group-item"
+    ng-class="{ active: navvm.isActive('/dashboard/users')}"
+    ng-show="navvm.userRole=='administrator'">
+    Usuarios
+  </a>
+  <li class="list-group-item">
+    <strong>Eventos</strong>
+  </li>
+  <a
+    href="/#dashboard/events"
+    class="list-group-item"
+    ng-class="{ active: navvm.isActive('/dashboard/events')}">
+    Lista de Eventos
+  </a>
+  <a
+    href="/#dashboard/events/add"
+    class="list-group-item"
+    ng-class="{ active: navvm.isActive('/dashboard/events/add')}">
+    Añadir nuevo evento
+  </a>
+  <li class="list-group-item">
+    <strong>Mis datos</strong>
+  </li>
+  <a
+    href="#"
+    class="list-group-item">
+    Datos de Usuario
+  </a>
+  <a
+    href="#"
+    class="list-group-item">
+    Datos de Organización
+  </a>
 </div>
