@@ -67,6 +67,30 @@ module.exports.getSelfUserData = function(req, res){
   sendJSONresponse(res, 200, resObject);
 }
 
+module.exports.updateSelfUserData = (req, res) => {
+  User.findById(req.user._id, (err, user) => {
+    if(err){
+      sendJSONresponse(res, 404, {
+        message: "No se pudo encontrar el usuario."
+      });
+    }else{
+      user.name = req.body.name;
+      user.email = req.body.email;
+      user.save(function(err) {
+        if (err)
+          sendJSONresponse(res, 500, {
+            message: "No se pudo modificar el usuario."
+          });
+        else
+          sendJSONresponse(res, 200, {
+            message: "El usuario se modificó exitosamente.",
+            token: user.generateJwt()
+          });
+      });
+    }
+  });
+}
+
 module.exports.eventsCreate = function (req, res) {
   var eventData = req.body.data.attributes;
   var newEvent = new Event();

@@ -5,9 +5,10 @@ const roles = [
 
 const roleTranslate = () => {
   return (value) => {
-    return (roles.find((element) => {
+    var element = roles.find((element) => {
       return element.value == value
-    })).name;
+    });
+    return element != undefined ? element.name : 'No Definido';
   }
 }
 

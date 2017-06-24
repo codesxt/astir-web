@@ -27,8 +27,21 @@ function usersSvc($http, authSvc){
     });
   }
 
+  var updateSelfUserData = function(userData){
+    return $http.patch('/api/v1/selfuser', {
+      name: userData.name,
+      email: userData.email
+    },
+    {
+      headers: {
+        Authorization: 'Bearer '+ authSvc.getToken()
+      }
+    });
+  }
+
   return {
     getUsers : getUsers,
-    getSelfUserData : getSelfUserData
+    getSelfUserData : getSelfUserData,
+    updateSelfUserData : updateSelfUserData
   };
 }

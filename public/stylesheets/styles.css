@@ -11,6 +11,11 @@ nav{
 a{
   color: white;
 }
+
+.black-text {
+  color: #000;
+}
+
 a:hover, a:focus{
   color: rgb(236, 120, 63);
 }
@@ -205,6 +210,9 @@ header{
 /* Valores para la directiva de mapas de Google */
 .angular-google-map-container { height: 200px; }
 
-.dashboard-navigation {
+/*
+ * Classes for spacing
+ */
+.m-t-15 {
   margin-top: 15px;
 }

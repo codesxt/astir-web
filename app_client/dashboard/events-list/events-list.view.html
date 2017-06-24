@@ -16,21 +16,17 @@
   </thead>
   <tbody>
     <tr ng-repeat="event in vm.events">
-      <td class="col-md-2">{{event.title}}</td>
+      <td class="col-md-3">{{event.title}}</td>
       <td class="col-md-1">{{event.category | categoryTranslate}}</td>
-      <td>{{event.description}}</td>
+      <td class="col-md-4">{{event.description}}</td>
       <td class="col-md-2">{{event.when.start | amDateFormat:'DD/MM/YYYY HH:mm' }}</td>
-      <td class="col-md-1">
+      <td class="col-md-2">
         <button type="button" class="btn btn-default" ng-click="vm.viewEvent(event)">
           <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
         </button>
-      </td>
-      <td class="col-md-1">
         <button type="button" class="btn btn-default">
           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
         </button>
-      </td>
-      <td class="col-md-1">
         <button type="button" class="btn btn-danger" ng-click="vm.deleteEvent(event)">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </button>

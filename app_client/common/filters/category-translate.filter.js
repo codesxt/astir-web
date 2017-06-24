@@ -12,9 +12,10 @@ const categories = [
 
 const categoryTranslate = () => {
   return (value) => {
-    return (categories.find((element) => {
+    var element = categories.find((element) => {
       return element.value == value
-    })).name;
+    });
+    return element != undefined ? element.name : 'No Definido';
   }
 }
 

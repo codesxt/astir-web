@@ -1,8 +1,74 @@
 <div class="container-fluid app-container">
 <dashboard-navigation></dashboard-navigation>
-<div class="col-md-10">
-  <h1>Datos del Usuario</h1>
-  <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
-  
+<div class="col-md-10 dashboard-content">
+  <div class="panel panel-default m-t-15">
+    <div class="panel-heading">
+      <h3 class="panel-title"> {{ vm.user.attributes.name }} </h3>
+    </div>
+    <div class="panel-body">
+      <span ng-show="!vm.editing">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td><strong>Email:</strong></td>
+            <td><a class="black-text" href="mailto:{{vm.user.attributes.email}}">{{vm.user.attributes.email}}</a></td>
+          </tr>
+          <tr>
+            <td><strong>Rol:</strong></td>
+            <td>{{ vm.user.attributes.role | roleTranslate }}</td>
+          </tr>
+        </tbody>
+      </table>
+      </span>
+
+      <span ng-show="vm.editing">
+        <form class="form-horizontal">
+          <fieldset>
+
+          <!-- Form Name -->
+          <legend>Editando datos de usuario</legend>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="name">Nombre</label>
+            <div class="col-md-4">
+            <input id="name" name="name" ng-model="vm.newUserData.name" placeholder="Ingrese su nombre" class="form-control input-md" required="" type="text">
+            <span class="help-block">Ingrese su nombre completo</span>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="email">Email</label>
+            <div class="col-md-4">
+            <input id="email" name="email" ng-model="vm.newUserData.email" placeholder="email@email.com" class="form-control input-md" required="" type="text">
+            </div>
+          </div>
+
+          </fieldset>
+          </form>
+        <button type="button" class="btn btn-default" ng-click="vm.cancelEdit()">
+          Cancelar Edición
+        </button>
+        <button type="button" class="btn btn-warning" ng-click="vm.updateUserData()">
+          Actualizar Datos
+        </button>
+      </span>
+    </div>
+    <div class="panel-footer clearfix">
+      <!--<button data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary">
+        <i class="glyphicon glyphicon-envelope">
+        </i>
+      </button>-->
+      <span class="pull-right">
+        <button ng-click="vm.editUser()" data-original-title="Editar usuario" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning">
+          <i class="glyphicon glyphicon-edit"></i>
+        </button>
+        <button ng-click="vm.removeUser()"  data-original-title="Eliminar cuenta" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger">
+          <i class="glyphicon glyphicon-remove"></i>
+        </button>
+      </span>
+    </div>
+  </div>
 </div>
 </div>

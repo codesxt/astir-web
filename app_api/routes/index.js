@@ -18,6 +18,7 @@ var ctrlUsers = require('../controllers/users');
 
 router.get('/users', auth, ctrlAuth.roleAuthorization(['administrator']), ctrlUsers.usersList);
 router.get('/selfuser', auth, ctrlUsers.getSelfUserData);
+router.patch('/selfuser', auth, ctrlUsers.updateSelfUserData);
 
 router.get('/events', ctrlEvents.eventsList);
 router.post('/events', auth, ctrlEvents.eventsCreate);
