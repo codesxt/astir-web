@@ -11,6 +11,7 @@ var ctrlEvents = require('../controllers/events');
 var ctrlAuth = require('../controllers/authentication');
 var ctrlUpload = require('../controllers/upload');
 var ctrlUsers = require('../controllers/users');
+var ctrlOrganizations =  require('../controllers/organizations');
 
 var ctrlTest = require('../controllers/test');
 
@@ -19,6 +20,9 @@ var ctrlUsers = require('../controllers/users');
 router.get('/users', auth, ctrlAuth.roleAuthorization(['administrator']), ctrlUsers.usersList);
 router.get('/selfuser', auth, ctrlUsers.getSelfUserData);
 router.patch('/selfuser', auth, ctrlUsers.updateSelfUserData);
+
+router.get('/organizations', ctrlOrganizations.organizationsList);
+router.post('/organizations', auth, ctrlOrganizations.organizationsCreate);
 
 router.get('/events', ctrlEvents.eventsList);
 router.post('/events', auth, ctrlEvents.eventsCreate);

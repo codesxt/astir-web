@@ -1,0 +1,151 @@
+<div class="container-fluid app-container">
+<dashboard-navigation></dashboard-navigation>
+<div class="col-md-10 dashboard-content">
+  <div class="panel panel-default m-t-15">
+    <div class="panel-heading">
+      <h3 class="panel-title">Organización Cultural</h3>
+    </div>
+    <div class="panel-body">
+      <span ng-show="vm.state=='none'">
+      <button type="button" class="btn btn-default" ng-click="vm.createNewOrganization()">
+        Crear Organización Nueva
+      </button>
+      </span>
+
+      <span ng-show="vm.state=='creating'">
+        <form class="form-horizontal" ng-submit="vm.createOrganization()">
+          <fieldset>
+
+          <!-- Form Name -->
+          <legend>Creando Organización Nueva</legend>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="name">Nombre</label>
+            <div class="col-md-6">
+            <input
+              id="name"
+              name="name"
+              placeholder="Nombre de la organización"
+              class="form-control input-md"
+              type="text"
+              ng-model="vm.newOrganization.name"
+              required>
+            </div>
+          </div>
+
+          <!-- Textarea -->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="description">Descripción</label>
+            <div class="col-md-6">
+              <textarea
+                class="form-control"
+                id="description"
+                name="description"
+                ng-model="vm.newOrganization.description">
+              </textarea>
+              <span class="help-block">
+                Escribe un poco sobre tu organización. Puedes contar un poco de historia,
+                objetivos, actividades, o lo que consideres relevante para que la gente la
+                conozca.
+              </span>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="address">Dirección</label>
+            <div class="col-md-6">
+            <input
+              id="address"
+              name="address"
+              placeholder="Dirección de la Organización"
+              class="form-control input-md"
+              type="text"
+              required
+              ng-model="vm.newOrganization.address">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="phone">Teléfono</label>
+            <div class="col-md-6">
+            <input
+              id="phone"
+              name="phone"
+              placeholder="Teléfono"
+              class="form-control input-md"
+              type="text"
+              ng-model="vm.newOrganization.phone">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="email">Email</label>
+            <div class="col-md-6">
+            <input
+              id="email"
+              name="email"
+              placeholder="Email"
+              class="form-control input-md"
+              type="text"
+              ng-model="vm.newOrganization.email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="website">Sitio Web</label>
+            <div class="col-md-6">
+            <input
+              id="website"
+              name="website"
+              placeholder="Sitio Web"
+              class="form-control input-md"
+              type="text"
+              ng-model="vm.newOrganization.website">
+            </div>
+          </div>
+
+          <input type="submit" class="btn btn-warning" value="Crear Organización"></input>
+
+          </fieldset>
+        </form>
+      </span>
+
+      <span ng-show="vm.state=='reading'">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td><strong>Nombre:</strong></td>
+              <td>{{vm.organization.name}}</td>
+            </tr>
+            <tr>
+              <td><strong>Descripción:</strong></td>
+              <td>{{vm.organization.description}}</td>
+            </tr>
+            <tr>
+              <td><strong>Dirección:</strong></td>
+              <td>{{vm.organization.where.address}}</td>
+            </tr>
+            <tr>
+              <td><strong>Teléfono:</strong></td>
+              <td>{{vm.organization.phone}}</td>
+            </tr>
+            <tr>
+              <td><strong>Email:</strong></td>
+              <td>{{vm.organization.email}}</td>
+            </tr>
+            <tr>
+              <td><strong>Sitio web:</strong></td>
+              <td>{{vm.organization.website}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </span>
+
+    </div>
+    <div class="panel-footer clearfix">
+    </div>
+  </div>
+</div>
+</div>

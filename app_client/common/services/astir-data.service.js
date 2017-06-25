@@ -33,6 +33,7 @@ function astirData($http, authSvc){
       }
     });
   }
+
   var deleteEvent = function(eventId){
     return $http.delete('/api/v1/events/'+eventId, {
       headers: {
@@ -40,10 +41,25 @@ function astirData($http, authSvc){
       }
     });
   }
+
+  var getOrganizationByUser =  function(userId){
+    return $http.get('/api/v1/organizations?filter[representant]='+userId);
+  }
+
+  var createOrganization = function(organizationData){
+    return $http.post('/api/v1/organizations', organizationData, {
+      headers: {
+        'Authorization': 'Bearer '+ authSvc.getToken()
+      }
+    });
+  }
+
   return {
     getEvents : getEvents,
     getEvent : getEvent,
     createEvent : createEvent,
-    deleteEvent : deleteEvent
+    deleteEvent : deleteEvent,
+    getOrganizationByUser : getOrganizationByUser,
+    createOrganization : createOrganization
   };
 }

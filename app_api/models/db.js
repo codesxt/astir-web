@@ -45,3 +45,4 @@ process.on('SIGTERM', function() {
 
 require('./events');
 require('./users');
+require('./organizations');
