@@ -1,4 +1,5 @@
 var mongoose = require( 'mongoose' );
+var ObjectId = mongoose.Schema.ObjectId;
 
 var locationSchema = new mongoose.Schema({
   type: {type: String, default: 'Point'},
@@ -31,7 +32,10 @@ var eventSchema = new mongoose.Schema({
   cost: [{
     text: {type: String, required: true},
     value: {type: Number, required: true, min: 0}
-  }]
+  }],
+  organizer: {type: ObjectId, required: true}
+},{
+  timestamps: true
 });
 
 eventSchema.index({ "when.start": 1, type: -1 });

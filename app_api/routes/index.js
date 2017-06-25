@@ -23,6 +23,7 @@ router.patch('/selfuser', auth, ctrlUsers.updateSelfUserData);
 
 router.get('/organizations', ctrlOrganizations.organizationsList);
 router.post('/organizations', auth, ctrlOrganizations.organizationsCreate);
+router.get('/organizations/:organizationId', ctrlOrganizations.organizationsReadOne);
 
 router.get('/events', ctrlEvents.eventsList);
 router.post('/events', auth, ctrlEvents.eventsCreate);

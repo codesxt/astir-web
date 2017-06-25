@@ -21,6 +21,8 @@ var organizationSchema = new mongoose.Schema({
   website: {type: String, required: false},
   lastActivity: {type: Date, required: true},
   representant: {type: ObjectId, required: true, index: {unique: true}}
+}, {
+  timestamps: true
 });
 
 organizationSchema.index({ "where.location": '2dsphere' }, {sparse: true});

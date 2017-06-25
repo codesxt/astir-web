@@ -1,6 +1,21 @@
 <div class="container-fluid app-container">
   <dashboard-navigation></dashboard-navigation>
   <div class="col-md-10">
+  <span ng-show="!vm.organization">
+    <div class="panel panel-danger m-t-15">
+      <div class="panel-heading">
+        <h3 class="panel-title">No hay organización</h3>
+      </div>
+      <div class="panel-body">
+        Para crear un evento, se deben registrar los datos de una organización cultural.<br/>
+        Puedes registrar tu organización aquí:<br/>
+        <a href="/#dashboard/organization" class="btn btn-default" type="button">
+          Organización Cultural
+        </a>
+      </div>
+    </div>
+  </span>
+  <span ng-show="vm.organization">
   <h1>Añadir un nuevo evento</h1>
 
   <h3>Ingrese datos del evento</h3>
@@ -193,6 +208,11 @@
       </div>
     </div>
 
+    <h4>* Organizador</h4>
+    <p>Se registrará el evento con "{{ vm.organization.name }}" como organizador.</p>
+    <p>Si esta información es equivocada, revise la configuración de su organización.</p>
+
+
     <h4>5. Confirmación</h4>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
@@ -202,5 +222,6 @@
     </div>
 
   </form>
+  </span>
   </div>
 </div>

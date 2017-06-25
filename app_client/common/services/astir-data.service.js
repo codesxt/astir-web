@@ -54,12 +54,17 @@ function astirData($http, authSvc){
     });
   }
 
+  var getOrganization = (organizationId) => {
+    return $http.get('/api/v1/organizations/'+organizationId);
+  }
+
   return {
     getEvents : getEvents,
     getEvent : getEvent,
     createEvent : createEvent,
     deleteEvent : deleteEvent,
     getOrganizationByUser : getOrganizationByUser,
-    createOrganization : createOrganization
+    createOrganization : createOrganization,
+    getOrganization : getOrganization
   };
 }

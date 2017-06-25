@@ -6,7 +6,10 @@
   <div ng-show="vm.event != null">
     <h1>{{vm.event.title}}</h1>
     <p>{{vm.event.description}}</p>
-    <p><strong>Categoría: </strong>{{vm.event.category}}</p>
+    <p><strong>Categoría: </strong>{{ vm.event.category | categoryTranslate }}</p>
+    <p ng-show="vm.organization">
+      <strong>Organiza: </strong>{{ vm.organization.name }}
+    </p>
     <div class="alert alert-dismissible alert-info">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Revisa este evento en Astir</strong>

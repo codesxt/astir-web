@@ -9,13 +9,22 @@ function eventsAddCtrl(
   $scope,
   uiGmapGoogleMapApi,
   Upload,
-  $timeout
+  $timeout,
+  authSvc
 ){
   var vm = this;
-  vm.pageHeader = {
-    title: 'Astir',
-    subtitle: 'Cultura somos todos'
-  };
+  vm.getData = () => {
+    astirDataSvc.getOrganizationByUser(authSvc.currentUser()._id)
+    .success(function(result){
+      if(result.data.length==0){
+        vm.organization = null;
+      }else{
+        vm.organization = result.data[0];
+        vm.newEvent.where.name = vm.organization.name;
+        vm.newEvent.where.address = vm.organization.where.address;
+      }
+    })
+  }
   vm.categories = [
     {value: "music", name: "Música"},
     {value: "theatre", name: "Teatro"},
@@ -43,6 +52,7 @@ function eventsAddCtrl(
     },
     cost: []
   };
+  vm.getData();
 
   /*
    * Event Cost options

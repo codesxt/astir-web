@@ -9,48 +9,44 @@ var sendJSONresponse = function(res, status, content) {
   res.json(content);
 };
 
-module.exports.organizationsList = function (req, res) {
-  var hostname = req.headers.host;
-  var requestData = JsonApiQueryParser.parseRequest(req.url);
-  var pageNumber  = requestData.queryData.page.number  || 0;
-  var pageSize    = requestData.queryData.page.size    || 0;
-  var query = {
-
-  };
-  Organization.find(
-    query
-    ,
-    null,
-    {
-      sort:{
-
-      },
-      skip:pageNumber*pageSize,
-      limit:pageSize*1
-    },
-    function(err, organizations){
+module.exports.organizationsReadOne = (req, res) => {
+  var organizationId = req.params.organizationId;
+  if(organizationId){
+    Organization.findById(organizationId)
+    .exec((err, organization) => {
       if(err){
-        console.log(err);
-        sendJSONresponse(res, 400, err);
-      }else{
-        //console.log(events);
-        Organization.count(query, (err, count) => {
-          sendJSONresponse(res, 201, {
-            meta: {
-              "total-pages": count/pageSize,
-              "total-items": count
-            },
-            links: {
-              self: hostname+'/api/v1/organizations'
-            },
-            data: organizations
-          });
+        sendJSONresponse(res, 404, {
+          message: "No se ha encontrado la organización."
         });
+        return;
       }
-    });
-};
+      sendJSONresponse(res, 200, {
+        _id: organization._id,
+        type: "organizations",
+        attributes: {
+          name: organization.name,
+          description: organization.description,
+          where: organization.where,
+          email: organization.email,
+          phone: organization.phone,
+          website: organization.website
+        },
+        relationships: {
 
-module.exports.organizationsList = function (req, res) {
+        },
+        links: {
+          self: req.headers.host+'/api/v1/organizations/'+organizationId
+        }
+      });
+    })
+  }else{
+    sendJSONresponse(res, 400, {
+      "message": "Es necesario especificar el ID de la organización."
+    })
+  }
+}
+
+module.exports.organizationsList = (req, res) => {
   var hostname = req.headers.host;
   var requestData = JsonApiQueryParser.parseRequest(req.url);
   var pageNumber  = requestData.queryData.page.number  || 0;

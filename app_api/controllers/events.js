@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Event = mongoose.model('Event');
+var Organization = mongoose.model('Organization');
 
 var JsonApiQueryParserClass = require('jsonapi-query-parser');
 var JsonApiQueryParser = new JsonApiQueryParserClass();
@@ -54,39 +55,56 @@ module.exports.eventsList = function (req, res) {
 module.exports.eventsCreate = function (req, res) {
   var eventData = req.body.data.attributes;
   var newEvent = new Event();
-  newEvent.title = eventData.title;
-  newEvent.category = eventData.category;
-  newEvent.description = eventData.description;
-  newEvent.when.start = eventData.when.start;
-  newEvent.when.finish = eventData.when.finish;
-  newEvent.where.name = eventData.where.name;
-  newEvent.where.address = eventData.where.address;
-  if(eventData.where.location){
-    newEvent.where.location = eventData.where.location;
-  }
-  if(eventData.banner){
-    newEvent.banner = eventData.banner;
-  }
-  newEvent.cost = eventData.cost;
-  newEvent.save(function(err){
-    if(err){
-      console.log(err);
-      sendJSONresponse(res, 400, err);
+  Organization.findOne({
+    representant: req.user._id
+  }, (error, organization) => {
+    if(error){
+      console.log(error);
+      sendJSONresponse(res, 400, error);
+    }else if(organization == null){
+      sendJSONresponse(res, 404, {
+        message: "No existe una organización registrada para el usuario."
+      });
     }else{
-      console.log(newEvent);
-      sendJSONresponse(res, 201, {
-        type:"events",
-        id: newEvent._id,
-        attributes: {
-          description: newEvent.description,
-          category: newEvent.category,
-          cost: newEvent.cost,
-          banner: newEvent.banner,
-          where: newEvent.where,
-          when: newEvent.when
-        },
-        links: {
-          self: req.headers.host+'/api/v1/events/'+newEvent._id
+      newEvent.title = eventData.title;
+      newEvent.category = eventData.category;
+      newEvent.description = eventData.description;
+      newEvent.when.start = eventData.when.start;
+      newEvent.when.finish = eventData.when.finish;
+      newEvent.where.name = eventData.where.name;
+      newEvent.where.address = eventData.where.address;
+      newEvent.organizer = organization._id;
+      if(eventData.where.location){
+        newEvent.where.location = eventData.where.location;
+      }
+      if(eventData.banner){
+        newEvent.banner = eventData.banner;
+      }
+      newEvent.cost = eventData.cost;
+      newEvent.save(function(err){
+        if(err){
+          console.log(err);
+          sendJSONresponse(res, 400, err);
+        }else{
+          console.log(newEvent);
+          organization.lastActivity = new Date();
+          organization.save((err) => {});
+          sendJSONresponse(res, 201, {
+            type:"events",
+            id: newEvent._id,
+            attributes: {
+              description: newEvent.description,
+              category: newEvent.category,
+              cost: newEvent.cost,
+              banner: newEvent.banner,
+              where: newEvent.where,
+              when: newEvent.when,
+              organizer: newEvent.organizer
+            },
+            links: {
+              self: req.headers.host+'/api/v1/events/'+newEvent._id
+            }
+          });
         }
       });
     }
@@ -113,7 +131,8 @@ module.exports.eventsReadOne = function (req, res) {
           cost: event.cost,
           banner: event.banner,
           where: event.where,
-          when: event.when
+          when: event.when,
+          organizer: event.organizer
         },
         relationships: {
 
